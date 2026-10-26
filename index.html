@@ -260,6 +260,74 @@ textarea.code{width:100%;min-height:140px;font-family:ui-monospace,Consolas,mono
   .date{font-size:1.35rem}
   .hbar{grid-template-columns:minmax(0,6.5rem) minmax(0,1fr) 3rem}
 }
+/* Intro: a dialog with an animated stage per scene. Base styles are each scene's final picture; the keyframes animate towards it. */
+body.intro-open{overflow:hidden}
+.intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(8,16,26,.55);backdrop-filter:blur(3px)}
+.intro-card{width:min(34rem,100%);max-height:100%;overflow:auto;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
+.intro-card>*{flex:none}
+.intro-bars{display:flex;gap:4px}
+.intro-bars i{flex:1;height:3px;border-radius:2px;background:var(--rule);overflow:hidden}
+.intro-bars i.done{background:var(--accent)}
+.intro-fill{display:block;height:100%;background:var(--accent);transform-origin:left;animation:i-fill var(--dur) linear both}
+.intro-stage{background:var(--accent-soft);border-radius:8px;overflow:hidden}
+.intro-stage svg{display:block;width:100%;height:auto;max-height:44vh}
+.intro-text{display:flex;flex-direction:column;gap:4px;min-height:8.5rem}
+.intro-text h2{font-size:1.3rem}
+.intro-text p{margin:0;color:var(--muted)}
+.intro-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.intro-nav span{margin-right:auto}
+.intro.paused *{animation-play-state:paused!important}
+.intro-stage text{font-family:var(--f-body);font-size:8px;fill:var(--ink)}
+.intro-stage .t6{font-size:6.5px} .intro-stage .t7{font-size:7.5px} .intro-stage .t8{font-size:8.5px} .intro-stage .t13{font-size:14px}
+.intro-stage .b{font-weight:700} .intro-stage .it{font-style:italic} .intro-stage .disp{font-family:var(--f-display)}
+.intro-stage .tk{fill:var(--accent-ink)} .intro-stage .tm{fill:var(--muted)} .intro-stage .tg{fill:var(--gold)} .intro-stage .tgood{fill:var(--good)} .intro-stage .ta{fill:var(--accent)} .intro-stage .tbad{fill:var(--bad)}
+.intro-stage .c-acc{fill:var(--accent)} .intro-stage .c-ink{fill:var(--accent-ink)} .intro-stage .c-gold{fill:var(--gold)} .intro-stage .c-sheet{fill:var(--sheet)}
+.intro-stage .c-line{fill:var(--line)} .intro-stage .c-soft{fill:var(--accent-soft)} .intro-stage .c-goldsoft{fill:var(--gold-soft)} .intro-stage .c-goodsoft{fill:var(--good-soft)}
+.intro-stage .c-badsoft{fill:var(--bad-soft)} .intro-stage .c-bad{fill:var(--bad)}
+.intro-stage .s-line{stroke:var(--line)} .intro-stage .s-gold{stroke:var(--gold)} .intro-stage .s-acc{stroke:var(--accent)}
+.intro-stage .s-good{stroke:var(--good);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.intro-stage .dash{stroke-dasharray:3 3;fill:none}
+.intro-stage [class*="a-"]{transform-box:fill-box;transform-origin:center}
+.intro-stage .a-up{animation:i-up .6s var(--d,0s) both cubic-bezier(.2,.7,.3,1)}
+.intro-stage .a-in{animation:i-in .6s var(--d,0s) both cubic-bezier(.2,.7,.3,1)}
+.intro-stage .a-inl{animation:i-inl .7s var(--d,0s) both cubic-bezier(.2,.7,.3,1)}
+.intro-stage .a-pop{animation:i-pop .5s var(--d,0s) both cubic-bezier(.3,1.6,.5,1)}
+.intro-stage .a-fade{animation:i-fade .6s var(--d,0s) both}
+.intro-stage .a-press{animation:i-press .45s var(--d,0s) both}
+.intro-stage .a-sail{animation:i-sail 2s var(--d,0s) both cubic-bezier(.2,.7,.3,1)}
+.intro-stage .a-bob{animation:i-bob 2.6s ease-in-out infinite}
+.intro-stage .a-drift{animation:i-drift 3s linear infinite}
+.intro-stage .a-drift2{animation:i-drift2 4.6s linear infinite}
+.intro-stage .a-rise{animation:i-rise 1.6s var(--d,0s) both ease-out}
+.intro-stage .a-unveil{transform:scaleX(0);transform-origin:right center;animation:i-unveil 1.3s var(--d,0s) both steps(18)}
+.intro-stage .a-draw{stroke-dasharray:16;animation:i-draw .35s var(--d,0s) both ease-out}
+.intro-stage .a-grow{transform-origin:center bottom;animation:i-grow .8s var(--d,0s) both cubic-bezier(.2,.7,.3,1)}
+.intro-stage .a-fly{animation:i-fly 2.6s var(--d,0s) infinite both}
+.intro-stage .a-ripple{opacity:0;animation:i-ripple .7s var(--d,0s) both ease-out}
+.intro-stage .a-sheet{opacity:0;animation:i-sheet 2.4s var(--d,0s) both ease-in-out}
+.intro-stage .a-needle{transform:rotate(15deg);animation:i-needle 2.2s var(--d,0s) both cubic-bezier(.3,1.4,.5,1)}
+.intro-stage .a-archive{opacity:0;transform:translate(136px,50px) scale(.15);animation:i-archive 1s var(--d,0s) both ease-in}
+@keyframes i-fill{from{transform:scaleX(0)}}
+@keyframes i-up{from{opacity:0;transform:translateY(10px)}}
+@keyframes i-in{from{opacity:0;transform:translateX(28px)}}
+@keyframes i-inl{from{opacity:0;transform:translateX(-60px)}}
+@keyframes i-pop{from{opacity:0;transform:scale(.2)}}
+@keyframes i-fade{from{opacity:0}}
+@keyframes i-press{50%{transform:scale(.9)}}
+@keyframes i-sail{from{transform:translateX(-230px)}}
+@keyframes i-bob{50%{transform:translateY(-3px) rotate(-2deg)}}
+@keyframes i-drift{to{transform:translateX(40px)}}
+@keyframes i-drift2{to{transform:translateX(-40px)}}
+@keyframes i-rise{from{opacity:0;transform:translateY(36px)}}
+@keyframes i-unveil{from{transform:scaleX(1)}}
+@keyframes i-draw{from{stroke-dashoffset:16}}
+@keyframes i-grow{from{transform:scaleY(0)}}
+@keyframes i-fly{0%,12%{opacity:0;transform:translate(var(--fx),var(--fy))}25%{opacity:1;transform:translate(var(--fx),var(--fy))}75%{opacity:1;transform:none}100%{opacity:0;transform:none}}
+@keyframes i-ripple{from{opacity:.5;transform:scale(.3)}to{opacity:0;transform:scale(1.8)}}
+@keyframes i-sheet{0%{opacity:0;transform:translateY(60px)}20%,72%{opacity:1;transform:none}100%{opacity:0;transform:translateY(60px)}}
+@keyframes i-needle{from{transform:rotate(-150deg)}70%{transform:rotate(28deg)}to{transform:rotate(15deg)}}
+@keyframes i-archive{from{opacity:1;transform:none}to{opacity:0;transform:translate(136px,50px) scale(.15)}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -408,7 +476,7 @@ const NATIVE=(window.chrome&&window.chrome.webview&&window.chrome.webview.hostOb
 /* ---------- web app: Microsoft sign-in + OneDrive app folder ----------
    Used when the page is served over https (GitHub Pages) and a client ID is configured.
    Each user's journal lives in their own OneDrive at Apps/<app name>/, same layout as the Windows app folder. */
-const APP_VERSION='Daykeel 1.1 AI (2026-10-26)';
+const APP_VERSION='Daykeel 1.2 Intro (2026-10-27)';
 // OneDrive names the app folder after the app registration ("Daykeel").
 const APP_FOLDER_LABEL='OneDrive › Apps › Daykeel';
 const CLOUD={clientId:'8b0e5366-6e9a-48c1-930b-9553783f2e0b',authority:'https://login.microsoftonline.com/common/oauth2/v2.0',
@@ -834,7 +902,7 @@ function viewConnect(){
     <p class="muted">Each morning you set one keel task and a short plan; each evening you log how it went. Over weeks, Daykeel shows whether your days move you where you want to go.</p>
     <p class="muted">Sign in with your Microsoft account (work or personal). Your entries are saved only in your own OneDrive, in the folder <code>${esc(APP_FOLDER_LABEL)}</code>. Daykeel cannot see any of your other files, and nobody else can read your entries.</p></div>
     <div class="row"><button class="btn" data-act="signin">Sign in with Microsoft</button>${PICKER?'<button class="ghost small" data-act="connect" data-mode="pick">Choose a folder on this PC instead…</button>':''}</div>
-    <p class="small muted">Tip: on the phone, use "Add to Home Screen" in the browser menu to open Daykeel like an app. New here? Open <button class="linkbtn" data-act="tab" data-tab="help">Help</button> for a step-by-step guide.</p>
+    <p class="small muted">Tip: on the phone, use "Add to Home Screen" in the browser menu to open Daykeel like an app. New here? <button class="linkbtn" data-act="intro">Watch the introduction</button> or open <button class="linkbtn" data-act="tab" data-tab="help">Help</button> for a step-by-step guide.</p>
     ${S.connectMsg?`<p class="err">${esc(S.connectMsg)}</p>`:''}</article>`;
   if(NATIVE) return `<article class="sheet"><div class="dhead"><span class="label">Welcome</span><h1 class="date">Choose your journal folder</h1>
     <p class="muted">Every day is saved as its own file in a folder you choose. A folder inside OneDrive is a good choice because it is backed up automatically. If you already used the journal, choose the folder that contains its <code>data</code> folder.</p></div>
@@ -1114,6 +1182,7 @@ function viewHelp(){
   ];
   return banner()+`<article class="sheet"><div class="dhead"><span class="label">Help</span><h1 class="date">How to use Daykeel</h1>
     <p class="muted">Tap a topic to open it. New here? Read topics 2, 4 and 5 first.</p></div>
+    <div class="row"><button class="btn sec2" data-act="intro">▶ Watch the introduction</button><span class="small muted">About one minute: setup and daily use, in 11 short scenes.</span></div>
     <nav class="help-toc" aria-label="Help topics">${topics.map(([id,title])=>`<a href="#help-${id}" data-help="${id}">${esc(title)}</a>`).join('')}</nav>
     ${topics.map(([id,title,body,open])=>topic(id,title,body,open)).join('')}
     <p class="small muted">App version: ${esc(APP_VERSION)}</p></article>`;
@@ -1587,6 +1656,7 @@ const A={
   'ai-copy-prompt'(){const t=aiOutsidePrompt();S.aiCopyText='';
     const fallback=()=>{S.aiCopyText=t;render();const el=$('#aiCopyText');if(el){el.focus();el.select();}};
     try{navigator.clipboard.writeText(t).then(()=>{S.aiGuideMsg='Instructions copied. Paste them into your AI chat and add your request at the end.';render();},fallback);}catch(e){fallback();}},
+  intro(){showIntro();},
   tab(a){if(a.dataset.tab==='day'&&store) return openDay(S.cur||S.date);S.tab=a.dataset.tab;render();if(a.dataset.anchor){const el=document.getElementById(a.dataset.anchor);if(el)el.scrollIntoView();}else window.scrollTo(0,0);},
   'day-go'(a){openDay(addDays(S.cur,+a.dataset.d));},
   'day-today'(){openDay(S.date);},
@@ -1705,6 +1775,167 @@ document.addEventListener('click',e=>{const h=e.target.closest('a[data-help]');i
   const d=document.getElementById('help-'+h.dataset.help);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});}});
 document.addEventListener('click',e=>{const a=e.target.closest('[data-act]');if(!a||a.disabled)return;const f=A[a.dataset.act];if(f)f(a,e);});
 
+/* ---------- intro ---------- */
+// Animated introduction in short scenes: setup first, then a day with Daykeel. Shown once on first start, replayed from Help.
+// Each element's base style is the scene's final picture, so with reduced motion (animations off) every scene is still complete.
+const INTRO_SEC=7;
+const iv=(cls,d)=>`class="${cls}" style="--d:${d}s"`;
+const T=(x,y,s,c='',a='')=>`<text x="${x}" y="${y}" class="${c}"${a?` text-anchor="${a}"`:''}>${s}</text>`;
+const BOAT='<path class="c-acc" d="M33 9v26h17z"/><path class="c-gold" d="M30 14v21H16z"/><path class="c-acc" d="M9 38h46l-7 8H16z"/><path class="c-acc" d="M28.5 45h7l-1.5 10h-4z"/>';
+const ICON='<rect class="c-acc" width="64" height="64" rx="15"/><path class="c-ink" d="M33 9v26h17z"/><path class="c-gold" d="M30 14v21H16z"/><path class="c-ink" d="M9 38h46l-7 8H16z"/><path class="c-ink" d="M28.5 45h7l-1.5 10h-4z"/>';
+const iWaves=y=>[['a-drift',.16,y],['a-drift2',.28,y+9]].map(([a,o,yy])=>`<path class="c-acc ${a}" opacity="${o}" d="M-40 ${yy}${' q10 -5 20 0 t20 0'.repeat(10)}V180H-40z"/>`).join('');
+const iBox=(x,y)=>`<rect class="c-sheet s-line" x="${x}" y="${y}" width="10" height="10" rx="2"/>`;
+const iTick=(x,y,d)=>`<path ${iv('a-draw s-good',d)} fill="none" d="M${x+2} ${y+5}l2.5 2.5 4-5.5"/>`;
+const iFile=(x,y,fx,fy,d)=>`<path class="c-sheet s-acc a-fly" style="--d:${d}s;--fx:${fx}px;--fy:${fy}px" d="M${x} ${y}h9l4 4v12h-13z"/>`;
+const iStar=(cx,cy,r)=>Array.from({length:10},(_,k)=>{const a=Math.PI/5*k-Math.PI/2,q=k%2?r*.45:r;return (cx+q*Math.cos(a)).toFixed(1)+','+(cy+q*Math.sin(a)).toFixed(1);}).join(' ');
+const iPage=(x,w)=>`<rect class="c-sheet s-line" x="${x}" y="8" width="${w}" height="164" rx="6"/>`;
+const INTRO=[
+ {label:'Welcome',title:'Welcome aboard Daykeel',
+  text:'A keel keeps a boat steady and on course. Daykeel does the same for your days: a few minutes in the morning to set your course, a few minutes in the evening to log how it went.',
+  svg:()=>`<circle ${iv('c-gold a-rise',.4)} cx="246" cy="58" r="20"/>
+   <g ${iv('a-sail',0)}><g class="a-bob"><g transform="translate(104 34) scale(1.5)">${BOAT}</g></g></g>
+   ${iWaves(110)}<g ${iv('a-fade',1.4)}>${T(160,26,'Day<tspan class="tg">keel</tspan>','t13 b disp ta','middle')}</g>`},
+ {label:'Setup · step 1 of 3',title:'Connect where your pages are saved',
+  text:'Tap <strong>Sign in with Microsoft</strong> on your phone or PC, or on a PC choose a folder in Settings. Every page is saved only in your own OneDrive, in <code>Apps › Daykeel</code>. Nobody else can read it.',
+  svg:()=>`<g ${iv('a-pop',.2)}><g ${iv('a-press',1)}><rect class="c-acc" x="98" y="12" width="124" height="22" rx="11"/>${T(160,26,'Sign in with Microsoft','t7 b tk','middle')}</g></g>
+   <rect class="c-sheet s-line" x="30" y="56" width="38" height="72" rx="7"/>
+   <rect class="c-line" x="36" y="68" width="26" height="3" rx="1.5"/><rect class="c-line" x="36" y="76" width="20" height="3" rx="1.5"/><rect class="c-line" x="36" y="84" width="24" height="3" rx="1.5"/>
+   <rect class="c-sheet s-line" x="88" y="60" width="70" height="46" rx="3"/><path class="c-line" d="M80 108h86l-6 7H86z"/>
+   <rect class="c-line" x="96" y="70" width="40" height="3" rx="1.5"/><rect class="c-line" x="96" y="78" width="52" height="3" rx="1.5"/><rect class="c-line" x="96" y="86" width="30" height="3" rx="1.5"/>
+   <g ${iv('a-fade',.8)}><path class="s-line dash" d="M70 92C130 92 160 100 214 100"/><path class="s-line dash" d="M158 82C186 82 196 100 214 100"/></g>
+   <path class="c-goldsoft s-gold" d="M216 70h24l6 7h48v52h-78z"/>
+   ${iFile(240,88,-197,-4,1.2)}${iFile(250,92,-133,-17,1.9)}${iFile(260,88,-217,-4,2.6)}
+   <g ${iv('a-fade',3.2)}><rect class="c-acc" x="278" y="60" width="14" height="11" rx="2"/><path class="s-acc" fill="none" stroke-width="2" d="M281 60v-3a4 4 0 0 1 8 0v3"/>
+   ${T(255,144,'Apps › Daykeel','t7 b','middle')}${T(255,155,'only you can read it','t6 tm','middle')}</g>`},
+ {label:'Setup · step 2 of 3',title:'Put Daykeel on your home screen',
+  text:'iPhone: in Safari tap <strong>Share → Add to Home Screen</strong>. Android: in Chrome tap <strong>⋮ → Install app</strong>. PC: in Edge choose <strong>… → Apps → Install</strong>. Daykeel then opens like an app and updates itself.',
+  svg:()=>{let g='';for(let r=0;r<3;r++)for(let c=0;c<3;c++)if(r<2||c<2)g+=`<rect class="c-line" x="${134+c*20}" y="${30+r*24}" width="16" height="16" rx="4"/>`;
+   return `<rect class="c-sheet s-line" x="120" y="8" width="80" height="166" rx="12"/><rect class="c-line" x="148" y="14" width="24" height="4" rx="2"/>${g}
+   <g ${iv('a-pop',2.9)}><g transform="translate(174 78) scale(.25)">${ICON}</g></g><g ${iv('a-fade',3.1)}>${T(182,102,'Daykeel','t6 b','middle')}</g>
+   <g ${iv('a-sheet',.5)}><rect class="c-sheet s-line" x="124" y="106" width="72" height="62" rx="8"/>${T(132,120,'Copy','t6 tm')}<rect class="c-soft" x="126" y="126" width="68" height="14" rx="3"/>${T(132,135.5,'Add to Home Screen','t6 b ta')}${T(132,156,'Add Bookmark','t6 tm')}</g>
+   <circle ${iv('a-ripple c-acc',1.4)} cx="160" cy="133" r="9"/>
+   <g ${iv('a-fade',.3)}>${T(60,52,'iPhone','t8 b','middle')}${T(60,64,'Share →','t7 tm','middle')}${T(60,75,'Add to Home Screen','t7 tm','middle')}</g>
+   <g ${iv('a-fade',.9)}>${T(60,112,'Android','t8 b','middle')}${T(60,124,'⋮ → Install app','t7 tm','middle')}</g>
+   <g ${iv('a-fade',1.5)}>${T(260,52,'PC (Edge)','t8 b','middle')}${T(260,64,'… → Apps →','t7 tm','middle')}${T(260,75,'Install this site','t7 tm','middle')}</g>`;}},
+ {label:'Setup · step 3 of 3',title:'Set your heading and values',
+  text:'Open <strong>Heading &amp; values</strong> once. Describe where you want to be in six areas of life, rank up to eight values that guide you, and add the habits you want to track. You can change it any time.',
+  svg:()=>`<circle class="c-sheet s-line" cx="72" cy="92" r="46"/>${T(72,56,'N','t6 b tm','middle')}${T(72,134,'S','t6 b tm','middle')}${T(33,94,'W','t6 b tm','middle')}${T(111,94,'E','t6 b tm','middle')}
+   <g ${iv('a-needle',.3)}><path class="c-gold" d="M72 60l6 32h-12z"/><path class="c-acc" d="M66 92h12l-6 32z"/></g><circle class="c-sheet s-acc" cx="72" cy="92" r="3"/>
+   ${['Family','Health','Freedom','Honesty','Growth'].map((v,i)=>{const y=22+i*28;return `<g ${iv('a-in',.5+i*.25)}><rect class="c-sheet s-line" x="142" y="${y}" width="152" height="22" rx="11"/><circle class="c-acc" cx="154" cy="${y+11}" r="7"/>${T(154,y+13.5,i+1,'t7 b tk','middle')}${T(168,y+14.5,v,'t8 b')}</g>`;}).join('')}
+   <g ${iv('a-pop',2.4)}><rect class="c-goodsoft" x="234" y="26" width="54" height="14" rx="7"/>${T(261,35.5,'on course','t6 b tgood','middle')}</g>
+   <g ${iv('a-pop',2.7)}><rect class="c-goldsoft" x="226" y="54" width="62" height="14" rx="7"/>${T(257,63.5,'needs attention','t6 b tg','middle')}</g>`},
+ {label:'How to use · calendar',title:'Every visit starts on the calendar',
+  text:'Coloured numbers are your day scores. Tap a day to open it. An empty day shows <strong>Create page</strong>; a page is only made when you tap it, so one device never overwrites another.',
+  svg:()=>{const sc=[72,64,85,40,78,null,90,55,81,30,70,88,null,76,62,93,48,80,71];let h='';
+   'MTWTFSS'.split('').forEach((l,c)=>h+=T(51+c*36,17,l,'t6 b tm','middle'));
+   for(let i=0;i<35;i++){const c=i%7,r=Math.floor(i/7),x=34+c*36,y=24+r*30,d=i-1;if(d<1||d>30)continue;
+     h+=`<rect class="c-sheet s-line" x="${x}" y="${y}" width="34" height="27" rx="3"/>`+T(x+4,y+9,d,'t6 tm');
+     const s=sc[d-1];
+     if(s!=null){const k=s>=70?['c-soft','ta']:s>=40?['c-goldsoft','tg']:['c-badsoft','tbad'];
+       h+=`<g ${iv('a-pop',.3+d*.08)}><rect class="${k[0]}" x="${x+13}" y="${y+14}" width="18" height="10" rx="3"/>${T(x+22,y+21.5,s,'t6 b '+k[1],'middle')}</g>`;}
+     if(d===20)h+=`<rect ${iv('a-pop s-acc',1.9)} fill="none" stroke-width="1.8" x="${x}" y="${y}" width="34" height="27" rx="3"/>`;}
+   return h+`<circle ${iv('a-ripple c-acc',2.6)} cx="87" cy="127" r="10"/>
+   <g ${iv('a-up',3)}><rect class="c-sheet s-acc" x="118" y="108" width="124" height="46" rx="6"/>${T(180,124,'This page is empty','t7 tm','middle')}<rect class="c-acc" x="130" y="130" width="100" height="16" rx="8"/>${T(180,141,'Create page','t7 b tk','middle')}</g>`;}},
+ {label:'How to use · morning',title:'Morning: set your course',
+  text:'Write one <strong>keel task</strong>: the thing that makes today a good day even if nothing else gets done. Add your next-up tasks, a recharge break, gratitude and a bright spot. Everything saves by itself.',
+  svg:()=>`${iPage(46,228)}<circle ${iv('c-gold a-rise',.2)} cx="252" cy="30" r="10"/>
+   ${T(58,26,'MORNING · SET YOUR COURSE','t6 b tm')}${T(58,44,'KEEL TASK','t6 b tg')}
+   <rect class="c-goldsoft s-gold" x="58" y="49" width="186" height="22" rx="3"/>${T(66,63.5,'Send the offer to the client','t8 b')}<rect ${iv('a-unveil c-goldsoft',.8)} x="62" y="51" width="178" height="18"/>
+   ${T(58,90,'NEXT UP','t6 b tm')}
+   ${iBox(58,96)}${T(74,104.5,'Call the supplier','t7')}${iTick(58,96,2.4)}
+   ${iBox(58,113)}${T(74,121.5,'Review the drawings','t7')}${iTick(58,113,2.9)}
+   ${T(58,143,'RECHARGE','t6 b tm')}<g ${iv('a-pop',3.3)}><rect class="c-goodsoft" x="58" y="148" width="92" height="16" rx="8"/>${T(104,158.5,'15 min walk at noon','t6 b tgood','middle')}</g>
+   <g ${iv('a-fade',3.9)}>${T(262,164,'✓ Saved','t7 b tgood','end')}</g>`},
+ {label:'How to use · during the day',title:'During the day: tick and adjust',
+  text:'Tick tasks as you finish them, on whichever device is at hand. Phone and PC stay in sync. If both change the same page, Daykeel combines the two versions, so nothing is overwritten.',
+  svg:()=>{const rows=(x,y0,gap,w,d)=>[0,1,2].map(i=>{const y=y0+i*gap;return iBox(x,y)+`<rect class="c-line" x="${x+15}" y="${y+3.5}" width="${w-i*6}" height="3" rx="1.5"/>`+(i<2?iTick(x,y,d+i*.5):'');}).join('');
+   return `<rect class="c-sheet s-line" x="36" y="22" width="66" height="132" rx="9"/><rect class="c-line" x="58" y="27" width="22" height="3" rx="1.5"/>${rows(44,46,22,36,.8)}
+   <rect class="c-sheet s-line" x="170" y="30" width="118" height="78" rx="3"/><path class="c-line" d="M160 110h138l-8 8H168z"/>${rows(180,44,20,80,2.6)}
+   <g ${iv('a-fade',1.9)}><path class="s-acc" fill="none" stroke-width="2" stroke-linecap="round" d="M116 74h40m-6-5 6 5-6 5"/><path class="s-acc" fill="none" stroke-width="2" stroke-linecap="round" d="M156 90h-40m6-5-6 5 6 5"/></g>
+   <g ${iv('a-up',3.3)}><rect class="c-goodsoft" x="112" y="144" width="104" height="18" rx="9"/>${T(164,156,'✓ Saved to OneDrive','t7 b tgood','middle')}</g>`;}},
+ {label:'How to use · evening',title:'Evening: log the day, set tomorrow',dur:8,
+  text:'Write your win, highlight and lesson, rate the day and tick your habits. Then tap <strong>Close the day &amp; set tomorrow</strong>: today is archived and unfinished tasks move to tomorrow.',
+  svg:()=>`<g ${iv('a-archive',4)}>${iPage(40,200)}<circle class="c-gold" cx="218" cy="30" r="10"/><circle class="c-sheet" cx="223" cy="26" r="9"/>
+   ${T(52,26,'EVENING · LOG THE DAY','t6 b tm')}
+   ${T(52,46,'Win of the day','t6 tm')}${T(52,58,'The offer went out on time','t8 b')}<rect ${iv('a-unveil c-sheet',.4)} x="50" y="49" width="170" height="12"/>
+   ${T(52,76,'Lesson','t6 tm')}${T(52,88,'Block the morning for deep work','t8 b')}<rect ${iv('a-unveil c-sheet',1.3)} x="50" y="79" width="180" height="12"/>
+   ${T(52,106,'Rate the day','t6 tm')}${[0,1,2,3,4].map(i=>`<polygon class="c-line" points="${iStar(58+i*16,118,6)}"/>`).join('')}${[0,1,2,3].map(i=>`<polygon ${iv('a-pop c-gold',2.1+i*.15)} points="${iStar(58+i*16,118,6)}"/>`).join('')}
+   <g ${iv('a-press',3.3)}><rect class="c-acc" x="52" y="140" width="176" height="20" rx="10"/>${T(140,153,'Close the day &amp; set tomorrow','t7 b tk','middle')}</g></g>
+   <rect class="c-acc" x="252" y="118" width="52" height="10" rx="2"/><rect class="c-sheet s-line" x="256" y="128" width="44" height="30" rx="2"/><rect class="c-line" x="270" y="134" width="16" height="3" rx="1.5"/>${T(278,170,'Archive','t6 b tm','middle')}
+   <g ${iv('a-inl',4.6)}>${iPage(40,200)}<circle class="c-gold" cx="218" cy="30" r="10"/>
+   ${T(52,26,'TOMORROW','t6 b tm')}${T(52,46,'KEEL TASK','t6 b tg')}<rect class="c-goldsoft s-gold" x="52" y="51" width="176" height="20" rx="3"/>${T(60,64,'What makes tomorrow a good day?','t7 tm it')}
+   ${T(52,92,'NEXT UP','t6 b tm')}${iBox(52,98)}${T(68,106.5,'Call the supplier','t7')}<rect class="c-goldsoft" x="144" y="98" width="26" height="11" rx="3"/>${T(157,106,'↻ 1','t6 b tg','middle')}</g>`},
+ {label:'How to use · week and progress',title:'Weekly goals and progress',
+  text:'Set weekly goals on the <strong>Week</strong> page; they appear on every day page as a reminder. <strong>Progress</strong> shows your scores, streaks and habits, and whether your keel tasks match your values.',
+  svg:()=>{const goals=['Finish the project plan','Book the dentist','Read two chapters'],bars=[48,70,35,82,64,90,76];
+   return `<rect class="c-sheet s-line" x="14" y="12" width="140" height="156" rx="6"/>${T(26,32,'★ WEEKLY GOALS','t6 b tg')}
+   ${goals.map((g,i)=>{const y=44+i*24;return `<g ${iv('a-in',.3+i*.25)}>${iBox(26,y)}${T(42,y+8.5,g,'t7')}</g>`+(i<2?iTick(26,y,1.8+i*.4):'');}).join('')}
+   <rect class="c-sheet s-line" x="166" y="12" width="140" height="156" rx="6"/>${T(178,32,'PROGRESS · 7 DAYS','t6 b tm')}<path class="s-line" d="M178 134h116"/>
+   ${bars.map((v,i)=>{const h=v*.8,x=182+i*16;return `<rect ${iv('a-grow '+(v>=70?'c-acc':v>=40?'c-gold':'c-bad'),.4+i*.12)} x="${x}" y="${134-h}" width="10" height="${h}" rx="2"/>`+T(x+5,144,'MTWTFSS'[i],'t6 tm','middle');}).join('')}
+   <g ${iv('a-fade',1.9)}>${T(236,158,'Average 66 · 5-day streak','t6 b','middle')}</g>`;}},
+ {label:'Optional · AI helper',title:'Get help from your own AI',
+  text:'In <strong>Settings → Connect your AI</strong>, add Claude, ChatGPT, Gemini or another provider with your own key. Paste goals, for example from Notion, and ask for a plan. Nothing changes until you tick and apply.',
+  svg:()=>{const prov=['Claude','ChatGPT','Gemini','Other'],sug=['Weekly goal: Finish the project plan','Keel task Monday: Draft chapter 1','Habit: 10 minutes of planning'];
+   return prov.map((p,i)=>`<g ${iv('a-pop',.1+i*.12)}><rect class="c-sheet s-line" x="${14+i*62}" y="10" width="56" height="16" rx="8"/>${T(42+i*62,21,p,'t6 b','middle')}</g>`).join('')+
+   `<g ${iv('a-in',.7)}><rect class="c-acc" x="122" y="36" width="184" height="22" rx="11"/>${T(214,50,'Plan my week from these Notion goals','t7 tk','middle')}</g>
+   <g ${iv('a-up',1.3)}><rect class="c-sheet s-line" x="14" y="68" width="214" height="102" rx="8"/>${T(24,84,'Suggested changes','t7 b')}
+   ${sug.map((s,i)=>{const y=92+i*16;return iBox(24,y)+iTick(24,y,2+i*.3)+T(40,y+8,s,'t6');}).join('')}
+   <g ${iv('a-press',3.1)}><rect class="c-acc" x="24" y="144" width="78" height="18" rx="9"/>${T(63,156,'Apply selected','t6 b tk','middle')}</g></g>
+   <g ${iv('a-fade',3.6)}>${T(110,156,'✓ Applied 3 changes','t6 b tgood')}</g>
+   <g ${iv('a-fade',4)}>${T(268,104,'Nothing changes','t7 tm','middle')}${T(268,116,'until you apply','t7 tm','middle')}</g>`;}},
+ {label:'Ready',title:'You are ready to set sail',
+  text:'Do the three setup steps, then plan your first day. You can watch this introduction again any time in <strong>Help</strong>.',
+  svg:()=>`<g ${iv('a-sail',0)}><g class="a-bob"><g transform="translate(34 46) scale(1.2)">${BOAT}</g></g></g>${iWaves(110)}
+   ${['Connect your storage','Add Daykeel to your home screen','Set your heading and values','Plan your first day'].map((s,i)=>{const y=26+i*22;
+     return `<g ${iv('a-in',.4+i*.3)}><circle class="c-goodsoft" cx="166" cy="${y}" r="8"/>${T(180,y+3,s,'t7 b')}</g><path ${iv('a-draw s-good',1.4+i*.3)} fill="none" d="M162 ${y}l2.5 2.5 4-5.5"/>`;}).join('')}`}
+];
+let introAt=0,introEl=null,introPrev=null;
+function showIntro(){
+  if(introEl) return;
+  introPrev=document.activeElement;
+  introEl=document.createElement('div');introEl.className='intro';
+  introEl.setAttribute('role','dialog');introEl.setAttribute('aria-modal','true');introEl.setAttribute('aria-label','Daykeel introduction');
+  introEl.addEventListener('click',introClick);
+  // The progress bar of the current scene drives autoplay; the last scene waits for the user.
+  introEl.addEventListener('animationend',e=>{if(e.target.classList.contains('intro-fill')&&introAt<INTRO.length-1)introGo(introAt+1);});
+  document.body.appendChild(introEl);document.body.classList.add('intro-open');
+  for(const el of [$('header.top'),$('#main')]) if(el) el.inert=true;
+  introGo(0);
+}
+function introGo(i){
+  introAt=Math.max(0,Math.min(INTRO.length-1,i));
+  const sc=INTRO[introAt],last=introAt===INTRO.length-1;
+  introEl.classList.remove('paused');
+  introEl.innerHTML=`<div class="intro-card">
+    <div class="intro-bars" aria-hidden="true">${INTRO.map((_,k)=>`<i class="${k<introAt?'done':''}">${k===introAt?`<b class="intro-fill" style="--dur:${sc.dur||INTRO_SEC}s"></b>`:''}</i>`).join('')}</div>
+    <div class="intro-stage"><svg viewBox="0 0 320 180" aria-hidden="true">${sc.svg()}</svg></div>
+    <div class="intro-text" aria-live="polite"><span class="label">${sc.label}</span><h2>${sc.title}</h2><p>${sc.text}</p></div>
+    <div class="intro-nav">
+      <button class="ghost small" data-iact="back" ${introAt?'':'disabled'}>Back</button>
+      <button class="ghost small" data-iact="pause" aria-pressed="false">Pause</button>
+      <span class="small muted">${introAt+1} / ${INTRO.length}</span>
+      ${last?`<button class="ghost small" data-iact="help">Open Help</button><button class="btn" data-iact="close">Get started</button>`
+        :`<button class="linkbtn" data-iact="close">Skip</button><button class="btn" data-iact="next">Next</button>`}
+    </div></div>`;
+  const b=introEl.querySelector('.btn');if(b)b.focus({preventScroll:true});
+}
+function introClick(e){
+  const b=e.target.closest('[data-iact]');if(!b||b.disabled)return;const k=b.dataset.iact;
+  if(k==='next')introGo(introAt+1);
+  else if(k==='back')introGo(introAt-1);
+  else if(k==='pause'){const p=introEl.classList.toggle('paused');b.textContent=p?'Play':'Pause';b.setAttribute('aria-pressed',String(p));}
+  else if(k==='help'){closeIntro();S.tab='help';render();window.scrollTo(0,0);}
+  else if(k==='close')closeIntro();
+}
+function closeIntro(){
+  if(!introEl) return;
+  introEl.remove();introEl=null;document.body.classList.remove('intro-open');
+  for(const el of [$('header.top'),$('#main')]) if(el) el.inert=false;
+  if(introPrev&&introPrev.focus) introPrev.focus();
+}
+document.addEventListener('keydown',e=>{if(!introEl)return;
+  if(e.key==='Escape')closeIntro();else if(e.key==='ArrowRight')introGo(introAt+1);else if(e.key==='ArrowLeft')introGo(introAt-1);});
+
 /* ---------- boot ---------- */
 // Reads every collection into fresh maps first, so a failed read never wipes what is on screen.
 // With background=true the swap is skipped if the user started editing while files were being read.
@@ -1738,6 +1969,8 @@ async function openFolder(h){
 async function boot(){
   S.tab='calendar'; // the app always starts on the calendar
   S.sub=lsGet('smj6:sub')||'';
+  // First start on this device: play the introduction once (marked as seen right away, so a sign-in redirect does not repeat it).
+  if(!lsGet('dk:intro')){lsSet('dk:intro','1');showIntro();}
   if(CLOUD_AVAILABLE&&'serviceWorker' in navigator){
     // updateViaCache:'none' makes the browser check sw.js on every start; when a new version takes over, reload once.
     const hadController=!!navigator.serviceWorker.controller;
