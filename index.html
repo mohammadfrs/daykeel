@@ -1,31 +1,34 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>6-Minute Journal</title>
-<meta name="theme-color" content="#1f5a66">
+<title>Daykeel</title>
+<meta name="description" content="Daykeel: a private daily planner that keeps your day on course.">
+<meta name="theme-color" content="#1b3a5c">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Journal">
+<meta name="apple-mobile-web-app-title" content="Daykeel">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
 <style>
-/* Layout: one centred journal sheet (max 46rem) under a sticky header with a tab strip; sections numbered like the book's 8-step routine */
+/* Daykeel. Layout: one centred sheet (max 46rem) under a sticky header with a tab strip.
+   Palette: deep sea blue (course), sail yellow (highlights), cool harbour greys. */
 :root{
-  --paper:#eceff0; --sheet:#fbfcfb; --ink:#1c2427; --muted:#5b676a; --line:#d3d9da; --rule:#e2e7e8;
-  --accent:#1f5a66; --accent-ink:#ffffff; --accent-soft:#dbe9ec; --gold:#9c6a12; --gold-soft:#f3e7cc;
-  --good:#2c7748; --good-soft:#dcefe2; --warn:#a8591a; --bad:#a3303d; --bad-soft:#f6dfe2;
-  --f-display:"Literata",Georgia,"Times New Roman",serif;
-  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --paper:#edf0f4; --sheet:#fbfcfd; --ink:#15202c; --muted:#596574; --line:#d2d9e1; --rule:#e1e6ec;
+  --accent:#1b3a5c; --accent-ink:#ffffff; --accent-soft:#dde6f0; --gold:#a8700c; --gold-soft:#f6ead2;
+  --good:#2a7350; --good-soft:#dbeee3; --warn:#a8591a; --bad:#a3303d; --bad-soft:#f6dfe2;
+  --f-display:"Bitter",Georgia,"Times New Roman",serif;
+  --f-body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#111618; --sheet:#182023; --ink:#e4eaeb; --muted:#97a4a7; --line:#2b3639; --rule:#243033;
-  --accent:#74b4c0; --accent-ink:#0d1a1d; --accent-soft:#1d3237; --gold:#d8a94c; --gold-soft:#3a2f18;
+  --paper:#0f141b; --sheet:#161d27; --ink:#e3e9f0; --muted:#95a2b2; --line:#283342; --rule:#212b38;
+  --accent:#8fb3dc; --accent-ink:#0d1520; --accent-soft:#1c2b3d; --gold:#e3b24e; --gold-soft:#3a2f17;
   --good:#6cc18c; --good-soft:#1b3326; --warn:#e2995a; --bad:#e3788a; --bad-soft:#3a1d22; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#111618; --sheet:#182023; --ink:#e4eaeb; --muted:#97a4a7; --line:#2b3639; --rule:#243033;
-  --accent:#74b4c0; --accent-ink:#0d1a1d; --accent-soft:#1d3237; --gold:#d8a94c; --gold-soft:#3a2f18;
+  --paper:#0f141b; --sheet:#161d27; --ink:#e3e9f0; --muted:#95a2b2; --line:#283342; --rule:#212b38;
+  --accent:#8fb3dc; --accent-ink:#0d1520; --accent-soft:#1c2b3d; --gold:#e3b24e; --gold-soft:#3a2f17;
   --good:#6cc18c; --good-soft:#1b3326; --warn:#e2995a; --bad:#e3788a; --bad-soft:#3a1d22; color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -36,8 +39,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
 .top-in{max-width:46rem;margin:0 auto;padding:10px 16px 0;display:flex;flex-direction:column;gap:6px}
 .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand b{font-family:var(--f-display);font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
-.brand b span{color:var(--accent)}
+.brand b{font-family:var(--f-display);font-size:1.2rem;font-weight:700;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:8px}
+.brand b svg{width:26px;height:26px;flex:none}
+.brand b span{color:var(--gold)}
 .status{border:0;background:transparent;font-size:.78rem;color:var(--muted);padding:4px 0;cursor:default;white-space:nowrap}
 .status[data-s="error"]{color:var(--bad);cursor:pointer;text-decoration:underline}
 .status[data-s="saving"]{color:var(--gold)}
@@ -186,7 +190,19 @@ td.today-col,th.today-col{background:var(--accent-soft)}
 .rank{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule)}
 .rank .n{font-family:var(--f-display);font-weight:700;font-size:1.1rem;color:var(--accent)}
-.tally{font-family:var(--f-display);letter-spacing:.12em;color:var(--muted);font-size:.9rem;margin-left:8px}
+.week-goals{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.week-goals .label{width:100%}
+.ai-chat{display:flex;flex-direction:column;gap:12px}
+.ai-msg{border-radius:6px;padding:10px 14px;max-width:100%;min-width:0;overflow-wrap:anywhere}
+.ai-msg.user{background:var(--accent-soft);align-self:flex-end;max-width:85%;white-space:pre-wrap}
+.ai-msg.ai{background:var(--paper);border:1px solid var(--rule)}
+.ai-actions{border:1px solid var(--gold);background:var(--gold-soft);border-radius:6px;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
+.ai-actions label{display:flex;gap:8px;align-items:flex-start}
+.ai-quick{display:flex;flex-wrap:wrap;gap:6px}
+textarea.box{width:100%;min-height:90px;border:1px solid var(--line);border-radius:6px;background:var(--sheet);padding:10px;font-size:16px;resize:vertical}
+.order-btns{display:inline-flex;gap:2px;margin-left:6px;vertical-align:middle}
+.order-btns .x{width:26px;height:26px;font-size:.95rem}
+.order-btns .x:disabled{opacity:.3;cursor:default}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .seg button{border:0;background:var(--sheet);padding:5px 9px;font-size:.78rem;cursor:pointer;font-weight:600;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
@@ -249,38 +265,40 @@ textarea.code{width:100%;min-height:140px;font-family:ui-monospace,Consolas,mono
 
 <header class="top">
   <div class="top-in">
-    <div class="brand"><b>6-Minute <span>Journal</span></b><button id="status" class="status" data-act="retry" data-s="idle"></button></div>
+    <div class="brand"><b><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="var(--accent)"/><path d="M33 9v26h17z" fill="var(--accent-ink)"/><path d="M30 14v21H16z" fill="var(--gold)"/><path d="M9 38h46l-7 8H16z" fill="var(--accent-ink)"/><path d="M28.5 45h7l-1.5 10h-4z" fill="var(--accent-ink)"/></svg>Day<span>keel</span></b><button id="status" class="status" data-act="retry" data-s="idle"></button></div>
     <nav class="tabs" aria-label="Sections">
       <button data-tab="calendar">Calendar</button>
       <button data-tab="day">Day</button>
       <button data-tab="week">Week</button>
       <button data-tab="progress">Progress</button>
-      <button data-tab="me">Vision &amp; values</button>
+      <button data-tab="ai">AI</button>
+      <button data-tab="me">Heading &amp; values</button>
       <button data-tab="history">Archive</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="help">Help</button>
     </nav>
   </div>
 </header>
-<main id="main" class="wrap"><p class="loading">Opening your journal…</p></main>
+<main id="main" class="wrap"><p class="loading">Opening Daykeel…</p></main>
 
 <script>
 (()=>{
 'use strict';
 /* ---------- constants ---------- */
+// Life areas (ids are stored in files and stay fixed; labels and prompts are Daykeel's own).
 const AREAS=[
- ['body','Body & mind','How is my physical and mental health?'],
- ['career','Education & career','Where do I stand at work? What am I learning?'],
- ['family','Family & friends','How is my family? Which friends are with me?'],
- ['attitude','Attitude','How do I approach life? What is my motto?'],
- ['finance','Finances','How am I set up financially?'],
- ['leisure','Leisure & fun','What do I do just for the joy of it?']];
+ ['body','Health & energy','How do I want to feel in my body and mind on an ordinary day?'],
+ ['career','Work & growth','What work am I proud of, and what am I getting better at?'],
+ ['family','People','Who is close to me, and how do we spend time together?'],
+ ['attitude','Mindset','Which sentence describes how I want to meet life?'],
+ ['finance','Money','What does "enough" look like, and how secure do I feel?'],
+ ['leisure','Joy & play','What do I do purely because I love it?']];
 const AREA=Object.fromEntries(AREAS.map(a=>[a[0],a[1]]));
-const VALUES=['Adventure','Mindfulness','Activity','Acceptance','Reputation','Aesthetics','Authenticity','Balance','Enthusiasm','Modesty','Charm','Coolness','Gratitude','Directness','Effectiveness','Honour','Honesty','Simplicity','Insight','Empathy','Success','Excellence','Fairness','Imagination','Flexibility','Progress','Freedom','Patience','Composure','Health','Generosity','Challenge','Harmony','Humour','Innovation','Intelligence','Intuition','Creativity','Passion','Love','Loyalty','Sustainability','Compassion','Curiosity','Objectivity','Openness','Optimism','Perfection','Professionalism','Realism','Respect','Calm','Self-confidence','Security','Diligence','Spirituality','Fun','Strength','Team spirit','Tradition','Independence','Vitality','Responsibility','Reliability','Trust','Forgiveness','Wisdom','Willpower','Prosperity','Belonging','Determination'];
+const VALUES=['Adventure','Ambition','Beauty','Calm','Care','Community','Courage','Craft','Creativity','Curiosity','Discipline','Faith','Family','Fitness','Freedom','Friendship','Fun','Growth','Honesty','Humility','Impact','Independence','Justice','Kindness','Knowledge','Leadership','Learning','Loyalty','Nature','Order','Patience','Play','Purpose','Quality','Rest','Security','Simplicity','Service','Teamwork','Wealth'];
 const QUOTES=[
- ['The successful warrior is the average man, with laser-like focus.','Bruce Lee'],
- ['The art of resting is a part of the art of working.','John Steinbeck'],
- ['Nothing happens without risk, but without risk nothing happens.','Walter Scheel'],
+ ['A smooth sea never made a skilled sailor.','English proverb'],
+ ['The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the sails.','William Arthur Ward'],
+ ['Well begun is half done.','Aristotle'],
  ['Well done is better than well said.','Benjamin Franklin'],
  ['It always seems impossible until it is done.','Nelson Mandela'],
  ['The best way out is always through.','Robert Frost'],
@@ -300,8 +318,8 @@ const QUOTES=[
  ['He who has a why to live can bear almost any how.','Friedrich Nietzsche'],
  ['Small deeds done are better than great deeds planned.','Peter Marshall'],
  ['Start where you are. Use what you have. Do what you can.','Arthur Ashe'],
- ['You cannot lengthen or widen your life, only deepen it.','Gorch Fock'],
- ['Visions are the archive of the future.','Thom Renzie'],
+ ['It is not the mountain we conquer, but ourselves.','Edmund Hillary'],
+ ['Slow and steady wins the race.','Aesop'],
  ['Simplicity is the ultimate sophistication.','Leonardo da Vinci'],
  ['Courage is grace under pressure.','Ernest Hemingway'],
  ['What gets measured gets managed.','Peter Drucker'],
@@ -342,7 +360,7 @@ const IDB={
 /* ---------- state ---------- */
 const S={days:new Map(),weeks:new Map(),meta:new Map(),reviews:new Map(),tab:'calendar',cur:null,calMonth:null,loadingDay:null,dayMsg:'',weekMon:null,
   unlocked:new Set(),range:30,confirm:false,restore:null,restoreMsg:'',
-  backupMsg:'',copyText:'',date:null,dir:null,savedDir:null,connectMsg:'',needLogin:false,flash:'',base:new Map(),sub:'',lastSync:0,syncing:false,syncMsg:'',folderMsg:'',settings:null,settingsMsg:''};
+  backupMsg:'',copyText:'',date:null,dir:null,savedDir:null,connectMsg:'',needLogin:false,flash:'',aiChat:[],aiBusy:false,aiCtl:null,aiForm:null,aiModels:[],aiMsg:'',aiGuideMsg:'',aiCopyText:'',aiDraft:'',base:new Map(),sub:'',lastSync:0,syncing:false,syncMsg:'',folderMsg:'',settings:null,settingsMsg:''};
 
 /* ---------- models ---------- */
 const arr=(a,n,f)=>{a=Array.isArray(a)?a.slice():[];while(a.length<n)a.push(typeof f==='function'?f():f);return a;};
@@ -359,21 +377,27 @@ function normDay(d){
   if(!d.status) d.status='open';
   return d;
 }
-function newWeek(id,monday){return{id,monday,cal:{mon:'',tue:'',wed:'',thu:'',fri:'',wkd:''},notes:'',wins:'',reflection:{well:'',change:'',rating:0}};}
-function normWeek(w){w.cal={mon:'',tue:'',wed:'',thu:'',fri:'',wkd:'',...(w.cal||{})};w.notes??='';w.wins??='';w.reflection={well:'',change:'',rating:0,...(w.reflection||{})};return w;}
+function newWeek(id,monday){return{id,monday,goals:[],cal:{mon:'',tue:'',wed:'',thu:'',fri:'',wkd:''},notes:'',wins:'',reflection:{well:'',change:'',rating:0}};}
+function normWeek(w){w.goals=Array.isArray(w.goals)?w.goals.filter(g=>g&&typeof g==='object').map(g=>({text:'',done:false,...g})):[];
+  w.cal={mon:'',tue:'',wed:'',thu:'',fri:'',wkd:'',...(w.cal||{})};w.notes??='';w.wins??='';w.reflection={well:'',change:'',rating:0,...(w.reflection||{})};return w;}
 function profile(){
   let p=S.meta.get('profile'); if(!p){p={};S.meta.set('profile',p);}
   p.vision=p.vision||{}; p.vision.horizon=p.vision.horizon||'5 years'; p.vision.date=p.vision.date||''; p.vision.areas=p.vision.areas||{};
-  const v=p.values=p.values||{}; v.selected=v.selected||[]; v.top=v.top||[]; v.pairs=v.pairs||{}; v.status=v.status||{};
-  v.focus=arr(v.focus,2,''); v.answers=v.answers||{}; v.custom=v.custom||[];
+  // Values compass: up to 8 chosen values in the user's own order; status "well" (on course) or "more" (needs attention).
+  const v=p.values=p.values||{}; v.order=Array.isArray(v.order)?v.order:[]; v.status=v.status||{}; v.notes=v.notes||{}; v.custom=v.custom||[];
+  // Profiles from the earlier version: turn the old ranking (top five plus pair results) into the new order once.
+  if(!v.order.length&&Array.isArray(v.top)&&v.top.length){
+    const wins={};v.top.forEach(x=>wins[x]=0);
+    for(const w of Object.values(v.pairs||{})) if(w in wins) wins[w]++;
+    v.order=v.top.slice().sort((a,b)=>wins[b]-wins[a]).slice(0,MAX_VALUES);
+    for(const [name,a] of Object.entries(v.answers||{})) if(a&&filled(a.change)&&!v.notes[name]) v.notes[name]=a.change;
+  }
+  delete v.top; delete v.pairs; delete v.selected; delete v.focus; delete v.answers;
   p.habits=Array.isArray(p.habits)?p.habits:[];
   return p;
 }
-function rankedValues(){
-  const v=profile().values; const wins={};v.top.forEach(x=>wins[x]=0);
-  for(const [k,w] of Object.entries(v.pairs)){const [a,b]=k.split('|');if(v.top.includes(a)&&v.top.includes(b)&&w in wins) wins[w]++;}
-  return v.top.slice().sort((a,b)=>wins[b]-wins[a]).map(x=>({name:x,wins:wins[x]}));
-}
+const MAX_VALUES=8;
+function rankedValues(){return profile().values.order.map(name=>({name}));}
 
 /* ---------- storage ---------- */
 let store=null;
@@ -384,7 +408,9 @@ const NATIVE=(window.chrome&&window.chrome.webview&&window.chrome.webview.hostOb
 /* ---------- web app: Microsoft sign-in + OneDrive app folder ----------
    Used when the page is served over https (GitHub Pages) and a client ID is configured.
    Each user's journal lives in their own OneDrive at Apps/<app name>/, same layout as the Windows app folder. */
-const APP_VERSION='2026-10-18 calendar aligned';
+const APP_VERSION='Daykeel 1.1 AI (2026-10-26)';
+// OneDrive names the app folder after the app registration ("Daykeel").
+const APP_FOLDER_LABEL='OneDrive › Apps › Daykeel';
 const CLOUD={clientId:'8b0e5366-6e9a-48c1-930b-9553783f2e0b',authority:'https://login.microsoftonline.com/common/oauth2/v2.0',
   scopes:'openid profile offline_access Files.ReadWrite.AppFolder'};
 // CLOUD_AVAILABLE: this page can use Microsoft sign-in. CLOUD_MODE: this device currently uses it.
@@ -593,16 +619,16 @@ function fsStore(root){
 function dayMarkdown(d){
   const p=profile(), s=dayStats(d,p.habits), ck=t=>t.done?'[x]':'[ ]', L=[];
   const list=(title,items)=>{L.push('## '+title);items.length?L.push(...items):L.push('(empty)');L.push('');};
-  L.push(`# ${fmtLong(d.date)}`,'',`Status: ${d.status==='closed'?'archived':'open'}. Day score: ${s.score}/100.`,'');
-  list('1. Grateful for',d.grateful.filter(filled).map(x=>'- '+x));
-  list('2. Looking forward to',d.forward.filter(filled).map(x=>'- '+x));
-  list('3. Daily focus',filled(d.focus.text)?[`- ${ck(d.focus)} ${d.focus.text}${d.focus.carried?` (moved ${d.focus.carried}x)`:''}`,
+  L.push(`# Daykeel · ${fmtLong(d.date)}`,'',`Status: ${d.status==='closed'?'archived':'open'}. Day score: ${s.score}/100.`,'');
+  list('1. Keel task',filled(d.focus.text)?[`- ${ck(d.focus)} ${d.focus.text}${d.focus.carried?` (moved ${d.focus.carried}x)`:''}`,
     `- Life area: ${AREA[d.focus.area]||'not tagged'}. Value: ${d.focus.value||'not tagged'}.`]:[]);
-  list('4. To-do list',[...d.cream,...d.cherries].filter(t=>filled(t.text)).map(t=>`- ${ck(t)} ${t.text}${t.carried?` (moved ${t.carried}x)`:''}`));
-  list('5. To-relax list',d.relax.filter(t=>filled(t.text)).map(t=>`- ${ck(t)} ${t.text}`));
-  list('6. Appointments and notes',filled(d.notes)?[d.notes]:[]);
-  list('7. Thoughts, ideas and wins',[filled(d.evening.win)?'- Mini win: '+d.evening.win:'',filled(d.evening.moment)?'- Best moment: '+d.evening.moment:'',
-    filled(d.evening.learned)?'- Learned: '+d.evening.learned:'',d.evening.rating?`- Day rating: ${d.evening.rating}/5`:''].filter(Boolean));
+  list('2. Tasks',[...d.cream,...d.cherries].filter(t=>filled(t.text)).map(t=>`- ${ck(t)} ${t.text}${t.carried?` (moved ${t.carried}x)`:''}`));
+  list('3. Recharge',d.relax.filter(t=>filled(t.text)).map(t=>`- ${ck(t)} ${t.text}`));
+  list('4. Gratitude',d.grateful.filter(filled).map(x=>'- '+x));
+  list('5. Bright spot',d.forward.filter(filled).map(x=>'- '+x));
+  list('6. Schedule and notes',filled(d.notes)?[d.notes]:[]);
+  list('7. Logbook',[filled(d.evening.win)?'- Win of the day: '+d.evening.win:'',filled(d.evening.moment)?'- Highlight: '+d.evening.moment:'',
+    filled(d.evening.learned)?'- Lesson: '+d.evening.learned:'',d.evening.rating?`- Day rating: ${d.evening.rating}/5`:''].filter(Boolean));
   list('8. Habits',p.habits.map(h=>`- ${d.habits[h.id]?'[x]':'[ ]'} ${h.name}`));
   return L.join('\n');
 }
@@ -775,19 +801,19 @@ function analyse(range){
 }
 function insights(r,p){
   const out=[];
-  if(!r.journaled){out.push(['bad','No entries yet in this period. Fill in the morning part of today\'s page to start.']);return out;}
+  if(!r.journaled){out.push(['bad','No entries yet in this period. Open today in the calendar and set your keel task to start.']);return out;}
   const fr=pct(r.focusDone,r.focusSet);
-  out.push([r.journaled/r.n>=0.8?'good':'bad',`You journaled on ${r.journaled} of ${r.n} days (${pct(r.journaled,r.n)}%). Current streak: ${r.streak} day${r.streak===1?'':'s'}.`]);
-  if(r.focusSet) out.push([fr>=70?'good':'bad',`You completed your daily focus on ${r.focusDone} of ${r.focusSet} days (${fr}%).${fr<70?' Pick a smaller, clearer focus task that you can finish before noon.':''}`]);
-  if(r.focusSet<r.journaled) out.push(['bad',`On ${r.journaled-r.focusSet} journaled days you set no daily focus. The focus task is the core of the method.`]);
-  if(r.evenings<r.journaled*0.6) out.push(['bad',`Evening reflection was filled on only ${r.evenings} of ${r.journaled} days. Two minutes before sleep is enough.`]);
-  if(r.relaxDays<r.journaled*0.5) out.push(['bad',`You finished a to-relax item on ${r.relaxDays} of ${r.journaled} days. Rest is part of the plan, so schedule it like a meeting.`]);
-  else out.push(['good',`You made time to relax on ${r.relaxDays} of ${r.journaled} days.`]);
+  out.push([r.journaled/r.n>=0.8?'good':'bad',`You wrote on ${r.journaled} of ${r.n} days (${pct(r.journaled,r.n)}%). Current streak: ${r.streak} day${r.streak===1?'':'s'}.`]);
+  if(r.focusSet) out.push([fr>=70?'good':'bad',`You completed your keel task on ${r.focusDone} of ${r.focusSet} days (${fr}%).${fr<70?' Choose a smaller, clearer keel task that you can finish before noon.':''}`]);
+  if(r.focusSet<r.journaled) out.push(['bad',`On ${r.journaled-r.focusSet} written days you set no keel task. Without it, the day has no course.`]);
+  if(r.evenings<r.journaled*0.6) out.push(['bad',`The logbook was filled on only ${r.evenings} of ${r.journaled} days. Two minutes before sleep is enough.`]);
+  if(r.relaxDays<r.journaled*0.5) out.push(['bad',`You finished a recharge item on ${r.relaxDays} of ${r.journaled} days. Rest is part of the course, so plan it like a meeting.`]);
+  else out.push(['good',`You took time to recharge on ${r.relaxDays} of ${r.journaled} days.`]);
   const neglected=r.areas.filter(a=>a.vision&&a.n===0).map(a=>a.name);
-  if(neglected.length) out.push(['bad',`Your vision covers ${neglected.join(', ')}, but no daily focus served ${neglected.length>1?'these areas':'this area'}.`]);
-  const top=r.areas.slice().sort((a,b)=>b.n-a.n)[0]; if(top&&top.n) out.push(['good',`Most of your focus went to ${top.name} (${top.n} day${top.n===1?'':'s'}).`]);
+  if(neglected.length) out.push(['bad',`Your heading includes ${neglected.join(', ')}, but no keel task served ${neglected.length>1?'these areas':'this area'}.`]);
+  const top=r.areas.slice().sort((a,b)=>b.n-a.n)[0]; if(top&&top.n) out.push(['good',`Most of your keel tasks served ${top.name} (${top.n} day${top.n===1?'':'s'}).`]);
   const more=r.values.filter(v=>v.more);
-  for(const v of more) out.push([v.n?'good':'bad',`You want to live "${v.name}" more. ${v.n?`${v.n} focus task${v.n===1?' was':'s were'} tagged with it.`:'No focus task was tagged with it yet.'}`]);
+  for(const v of more) out.push([v.n?'good':'bad',`"${v.name}" needs attention. ${v.n?`${v.n} keel task${v.n===1?' was':'s were'} tagged with it.`:'No keel task was tagged with it yet.'}`]);
   for(const [t,n] of r.chronic.slice(0,3)) out.push(['bad',`"${t}" has moved forward ${n} times. Do it first tomorrow, delegate it, or drop it.`]);
   for(const h of r.habits) if(h.rate!=null&&h.rate<50) out.push(['bad',`Habit "${h.name}" was done on ${h.rate}% of journaled days.`]);
   return out;
@@ -800,25 +826,26 @@ function render(){
   const v=S.tab, m=$('#main');
   if(v==='help'){m.innerHTML=viewHelp();return;} // Help works before signing in too
   if(!store){m.innerHTML=viewConnect();return;}
-  m.innerHTML=(v==='week'?viewWeek():v==='me'?viewMe():v==='history'?viewHistory():v==='progress'?viewProgress():v==='settings'?viewSettings():v==='calendar'?viewCalendar():viewDay());
+  m.innerHTML=(v==='week'?viewWeek():v==='me'?viewMe():v==='history'?viewHistory():v==='progress'?viewProgress():v==='settings'?viewSettings():v==='calendar'?viewCalendar():v==='ai'?viewAI():viewDay());
 }
 const banner=()=>'';
 function viewConnect(){
-  if(CLOUD_MODE) return `<article class="sheet"><div class="dhead"><span class="label">Welcome</span><h1 class="date">Your private 6-Minute Journal</h1>
-    <p class="muted">Sign in with your Microsoft account (work or personal). Your journal is saved only in your own OneDrive, in the folder <code>Apps › 6-Minute Journal</code>. The app cannot see any of your other files, and nobody else can read your entries.</p></div>
+  if(CLOUD_MODE) return `<article class="sheet"><div class="dhead"><span class="label">Welcome aboard</span><h1 class="date">Daykeel keeps your day on course</h1>
+    <p class="muted">Each morning you set one keel task and a short plan; each evening you log how it went. Over weeks, Daykeel shows whether your days move you where you want to go.</p>
+    <p class="muted">Sign in with your Microsoft account (work or personal). Your entries are saved only in your own OneDrive, in the folder <code>${esc(APP_FOLDER_LABEL)}</code>. Daykeel cannot see any of your other files, and nobody else can read your entries.</p></div>
     <div class="row"><button class="btn" data-act="signin">Sign in with Microsoft</button>${PICKER?'<button class="ghost small" data-act="connect" data-mode="pick">Choose a folder on this PC instead…</button>':''}</div>
-    <p class="small muted">Tip: on the phone, use "Add to Home Screen" in the browser menu to open the journal like an app. New here? Open <button class="linkbtn" data-act="tab" data-tab="help">Help</button> for a step-by-step guide.</p>
+    <p class="small muted">Tip: on the phone, use "Add to Home Screen" in the browser menu to open Daykeel like an app. New here? Open <button class="linkbtn" data-act="tab" data-tab="help">Help</button> for a step-by-step guide.</p>
     ${S.connectMsg?`<p class="err">${esc(S.connectMsg)}</p>`:''}</article>`;
   if(NATIVE) return `<article class="sheet"><div class="dhead"><span class="label">Welcome</span><h1 class="date">Choose your journal folder</h1>
     <p class="muted">Every day is saved as its own file in a folder you choose. A folder inside OneDrive is a good choice because it is backed up automatically. If you already used the journal, choose the folder that contains its <code>data</code> folder.</p></div>
     <div class="row"><button class="btn" data-act="connect">Choose folder</button></div>
     ${S.connectMsg?`<p class="err">${esc(S.connectMsg)}</p>`:''}</article>`;
   if(!('showDirectoryPicker' in window)) return `<article class="sheet"><div class="dhead"><span class="label">Browser not supported</span><h1 class="date">Open this file in Microsoft Edge or Google Chrome</h1>
-    <p class="muted">The journal saves each day as a file in your Daily Plans folder. Only Edge and Chrome allow a page to write into a folder.</p></div></article>`;
+    <p class="muted">Daykeel saves each day as a file in a folder you choose. Only Edge and Chrome allow a page to write into a folder.</p></div></article>`;
   const h=S.savedDir;
   return `<article class="sheet"><div class="dhead"><span class="label">Journal folder</span><h1 class="date">${h?'Open your journal':'Choose your journal folder'}</h1>
     <p class="muted">${h?`Your journal is saved in the folder <strong>${esc(h.name)}</strong>. Your browser asks once per session before the page may use it. Choose "Allow on every visit" to skip this step next time.`
-      :`Click <strong>Choose folder…</strong>, browse to the folder for your journal in the Windows folder window and click <strong>Select Folder</strong>.${CLOUD_AVAILABLE?' To stay in sync with your phone, choose <code>OneDrive - ICODOS GmbH › Apps › 6-Minute Journal</code>.':''} Every day is saved there as its own file.`}</p></div>
+      :`Click <strong>Choose folder…</strong>, browse to the folder for your journal in the Windows folder window and click <strong>Select Folder</strong>.${CLOUD_AVAILABLE?` To stay in sync with your phone, choose <code>${esc(APP_FOLDER_LABEL)}</code> inside your OneDrive folder.`:''} Every day is saved there as its own file.`}</p></div>
     <div class="row"><button class="btn" data-act="connect">${h?`Open ${esc(h.name)}`:'Choose folder…'}</button>${h?'<button class="ghost small" data-act="connect" data-mode="pick">Choose a different folder…</button>':''}${CLOUD_AVAILABLE?'<button class="ghost small" data-act="use-cloud">Use Microsoft sign-in instead</button>':''}</div>
     ${S.connectMsg?`<p class="err">${esc(S.connectMsg)}</p>`:''}</article>`;
 }
@@ -849,7 +876,8 @@ function viewDay(){
     ${line(`${list}.${i}.text`,it.text,ph)}
     ${it.carried?`<span class="carried" title="Moved forward from earlier days">↻ ${it.carried}</span>`:''}
     ${removable&&!locked?`<button class="x" data-act="del-item" data-list="${list}" data-i="${i}" aria-label="Remove">×</button>`:''}</div>`;
-  const vals=rankedValues().map(v=>v.name); const valOpts=vals.length?vals:p.values.selected;
+  const valOpts=rankedValues().map(v=>v.name);
+  const wk=S.weeks.get(isoWeek(date)), wgoals=wk&&Array.isArray(wk.goals)?wk.goals.filter(g=>g&&filled(g.text)):[];
   const s=dayStats(d,p.habits);
   const sec=(n,title,sub,body,eve)=>`<section class="sec ${eve?'eve':''}"><span class="num">${n}</span><div class="sec-b"><div class="sec-h"><h3>${title}${sub?`<small>${sub}</small>`:''}</h3></div>${body}</div></section>`;
 
@@ -858,33 +886,33 @@ function viewDay(){
     ?`<div class="editbar"><div><strong>This page is archived.</strong> ${edited||'<span class="small muted">You can still correct or complete it.</span>'}</div><button class="btn sec2" data-act="unlock">Edit page</button></div>`
     :`<div class="editbar editing"><div><strong>Editing an archived page.</strong> <span class="small muted">Changes save automatically; click Save when you are done.</span></div><button class="btn" data-act="lock">Save</button></div>`;
   let html=banner()+`<article class="sheet">${head}${editBar}${S.flash?`<p class="flash">${esc(S.flash)}</p>`:''}
-  <div class="part"><span class="label">Morning · plan the day</span>${s.morning?'<span class="chip ok">Planned</span>':''}</div>`;
-  html+=sec(1,'I am grateful for','',d.grateful.map((g,i)=>line(`grateful.${i}`,g,i===0?'Something or someone that made life better':'…','Grateful for '+(i+1))).join(''));
-  html+=sec(2,'I am looking forward to','',d.forward.map((g,i)=>line(`forward.${i}`,g,i===0?'A moment you will enjoy today':'…','Looking forward to '+(i+1))).join(''));
-  html+=sec(3,'Daily focus','the slice of cake',`<p class="small muted">The one task that leaves you satisfied and strengthened once it is done.</p>
+  <div class="part"><span class="label">Morning · set your course</span>${s.morning?'<span class="chip ok">Course set</span>':''}</div>`;
+  html+=sec(1,'Keel task','the one thing that keeps today on course',`<p class="small muted">If only this gets done, today was a good day.</p>
     <div class="focus-box">${item('focus-x',0,d.focus,'My most important task today',false).replaceAll('focus-x.0.','focus.')}
     <div class="tags"><label>Life area<select class="line" ${b('focus.area')} ${dis}><option value="">Not tagged</option>${AREAS.map(a=>`<option value="${a[0]}" ${d.focus.area===a[0]?'selected':''}>${esc(a[1])}</option>`).join('')}</select></label>
     <label>Value it serves<select class="line" ${b('focus.value')} ${dis}><option value="">Not tagged</option>${valOpts.map(v=>`<option ${d.focus.value===v?'selected':''}>${esc(v)}</option>`).join('')}</select></label></div></div>
-    ${!valOpts.length?`<button class="linkbtn" data-act="tab" data-tab="me">Choose your values to tag focus tasks</button>`:''}`);
-  html+=sec(4,'To-do list','',`<span class="label">Whipped cream · tasks 2 and 3</span>${d.cream.map((t,i)=>item('cream',i,t,i===0?'Second most important task':'Third most important task',false)).join('')}
-    <span class="label" style="margin-top:8px">Cherries on top · everything else</span>${d.cherries.map((t,i)=>item('cherries',i,t,'Task',true)).join('')||'<p class="small muted">Nothing yet.</p>'}
+    ${!valOpts.length?`<button class="linkbtn" data-act="tab" data-tab="me">Choose your values to tag keel tasks</button>`:''}
+    ${wgoals.length?`<div class="week-goals"><span class="label">This week's goals</span>${wgoals.map(g=>`<span class="chip ${g.done?'ok':''}">${g.done?'✓ ':''}${esc(g.text)}</span>`).join('')}</div>`:''}`);
+  html+=sec(2,'Tasks','',`<span class="label">Next up</span>${d.cream.map((t,i)=>item('cream',i,t,i===0?'Second most important task':'Third most important task',false)).join('')}
+    <span class="label" style="margin-top:8px">Also today</span>${d.cherries.map((t,i)=>item('cherries',i,t,'Task',true)).join('')||'<p class="small muted">Nothing yet.</p>'}
     ${locked?'':`<button class="linkbtn" data-act="add" data-list="cherries">+ Add task</button>`}`);
-  html+=sec(5,'To-relax list','',`<p class="small muted">Take the time for yourself as seriously as a work appointment.</p>${d.relax.map((t,i)=>item('relax',i,t,'A walk, a call, no phone after 21:00…',d.relax.length>1)).join('')}
-    ${locked?'':`<button class="linkbtn" data-act="add" data-list="relax">+ Add relax item</button>`}`);
-  html+=sec(6,'Appointments &amp; notes','',`<textarea class="lined" rows="3" ${b('notes')} placeholder="12:30 lunch with Steffen · 15:30 project pitch" aria-label="Appointments and notes" ${dis}>${esc(d.notes)}</textarea>`);
-  html+=`<div class="part"><span class="label">Evening · reflect</span>${s.evening?'<span class="chip ok">Reflected</span>':''}</div>`;
-  html+=sec(7,'Thoughts, ideas &amp; wins','',`${line('evening.win',d.evening.win,'Mini win of the day','Mini win')}
-    ${line('evening.moment',d.evening.moment,'Best moment of the day','Best moment')}
-    ${line('evening.learned',d.evening.learned,'What I learned or would do differently','Learned')}
-    <span class="label" style="margin-top:10px">How was the day?</span>
+  html+=sec(3,'Recharge','',`<p class="small muted">Plan your breaks like appointments. A rested crew sails further.</p>${d.relax.map((t,i)=>item('relax',i,t,'A walk, a call with a friend, an hour without screens…',d.relax.length>1)).join('')}
+    ${locked?'':`<button class="linkbtn" data-act="add" data-list="relax">+ Add recharge item</button>`}`);
+  html+=sec(4,'Gratitude','',d.grateful.map((g,i)=>line(`grateful.${i}`,g,i===0?'A person, a thing or a moment I am thankful for':'…','Gratitude '+(i+1))).join(''));
+  html+=sec(5,'Bright spot','something to look forward to',d.forward.map((g,i)=>line(`forward.${i}`,g,i===0?'Something today that I will enjoy':'…','Bright spot '+(i+1))).join(''));
+  html+=sec(6,'Schedule &amp; notes','',`<textarea class="lined" rows="3" ${b('notes')} placeholder="09:00 team call · 13:00 lunch with Sara" aria-label="Schedule and notes" ${dis}>${esc(d.notes)}</textarea>`);
+  html+=`<div class="part"><span class="label">Evening · log the day</span>${s.evening?'<span class="chip ok">Logged</span>':''}</div>`;
+  html+=sec(7,'Logbook','',`${line('evening.win',d.evening.win,'Win of the day','Win of the day')}
+    ${line('evening.moment',d.evening.moment,'Highlight: the moment I want to remember','Highlight')}
+    ${line('evening.learned',d.evening.learned,'Lesson: what I learned or would do differently','Lesson')}
+    <span class="label" style="margin-top:10px">Rate the day</span>
     <div class="rating" role="group" aria-label="Day rating">${[1,2,3,4,5].map(n=>`<button data-act="rate" data-n="${n}" aria-pressed="${d.evening.rating===n}" ${dis}>${n}</button>`).join('')}</div>`,true);
-  html+=sec(8,'Habit tracker','',p.habits.length?`<div class="habits">${p.habits.map(h=>`<label><input type="checkbox" ${b('habits.'+h.id)} data-rerender ${d.habits[h.id]?'checked':''} ${dis}> ${esc(h.name||'Unnamed habit')}</label>`).join('')}</div>`
+  html+=sec(8,'Habits','',p.habits.length?`<div class="habits">${p.habits.map(h=>`<label><input type="checkbox" ${b('habits.'+h.id)} data-rerender ${d.habits[h.id]?'checked':''} ${dis}> ${esc(h.name||'Unnamed habit')}</label>`).join('')}</div>`
     :`<p class="small muted">No habits yet.</p><button class="linkbtn" data-act="tab" data-tab="me" data-anchor="habits">Add habits to track</button>`,true);
-  html+=`<div class="finish"><div class="score-line"><span class="label">Day score</span><strong>${s.score}</strong><span class="muted small">/ 100 · focus 40, tasks 2 and 3: 20, relax 15${p.habits.length?', habits 15':''}, reflection 10</span></div>`;
-  if(locked) html+=`<div class="row"><button class="btn sec2" data-act="unlock">Edit page</button><span class="small muted">Archived pages are locked against accidental changes.</span></div>`;
+  html+=`<div class="finish"><div class="score-line"><span class="label">Day score</span><strong>${s.score}</strong><span class="muted small">/ 100 · keel task 40, next up 20, recharge 15${p.habits.length?', habits 15':''}, logbook 10</span></div>`;  if(locked) html+=`<div class="row"><button class="btn sec2" data-act="unlock">Edit page</button><span class="small muted">Archived pages are locked against accidental changes.</span></div>`;
   else if(date===t&&d.status==='open'){
-    html+=S.confirm?`<div class="confirm"><p>Lock this page and open tomorrow's page? Unfinished tasks move to tomorrow.</p><div class="row"><button class="btn" data-act="finish-yes">Finish day</button><button class="ghost" data-act="finish-no">Cancel</button></div></div>`
-      :`<div class="row"><button class="btn" data-act="finish">Finish day &amp; prepare tomorrow</button><span class="small muted">Do this in the evening after steps 7 and 8.</span></div>`;
+    html+=S.confirm?`<div class="confirm"><p>Close today and set up tomorrow's page? Unfinished tasks move to tomorrow.</p><div class="row"><button class="btn" data-act="finish-yes">Close the day</button><button class="ghost" data-act="finish-no">Cancel</button></div></div>`
+      :`<div class="row"><button class="btn" data-act="finish">Close the day &amp; set tomorrow</button><span class="small muted">Do this in the evening after the logbook and habits.</span></div>`;
   } else if(date>t) html+=`<p class="small muted">Prepared in advance. This page becomes today's page in the morning.</p>`;
   else if(arch) html+=`<div class="row"><button class="btn" data-act="lock">Save</button><span class="small muted">Saves your changes and locks the page again.</span></div>`;
   html+=`</div></article>`;
@@ -899,12 +927,16 @@ function viewWeek(){
   let h=banner()+`<article class="sheet"><div class="dhead"><div class="drow"><span class="label">Week ${esc(wid.split('-W')[1])} · ${esc(wid.split('-W')[0])}</span>
     <div class="daynav"><button class="ghost" data-act="week-go" data-d="-7" aria-label="Previous week">‹</button><button class="ghost small" data-act="week-now" ${mondayOf(t)===mon?'disabled':''}>This week</button><button class="ghost" data-act="week-go" data-d="7" aria-label="Next week">›</button></div></div>
     <h1 class="date">${esc(fmtShort(mon))} to ${esc(fmtShort(dates[6]))}</h1></div>`;
+  h+=`<section class="sec"><span class="num">★</span><div class="sec-b"><div class="sec-h"><h3>Weekly goals</h3>${w.goals.length?`<span class="chip">${w.goals.filter(g=>g.done).length} of ${w.goals.length} done</span>`:''}</div>
+    <p class="small muted">What should this week achieve? Your keel tasks can serve these goals. An AI can fill them in for you, for example from Notion (see the AI tab).</p>
+    ${w.goals.map((g,i)=>`<div class="item ${g.done?'done':''}"><input type="checkbox" ${b('goals.'+i+'.done')} data-rerender ${g.done?'checked':''} aria-label="Goal done"><input class="line" type="text" ${b('goals.'+i+'.text')} value="${esc(g.text)}" placeholder="Weekly goal" aria-label="Weekly goal"><button class="x" data-act="wgoal-del" data-i="${i}" aria-label="Remove goal">×</button></div>`).join('')||'<p class="small muted">No goals yet.</p>'}
+    <button class="linkbtn" data-act="wgoal-add">+ Add goal</button></div></section>`;
   h+=`<section class="sec"><span class="num">1</span><div class="sec-b"><h3>Calendar &amp; appointments</h3><div class="cal">${CAL.map(([k,n])=>`<label><span class="label">${n}</span><textarea class="lined" rows="2" ${b('cal.'+k)} aria-label="${n}">${esc(w.cal[k])}</textarea></label>`).join('')}</div></div></section>`;
   h+=`<section class="sec"><span class="num">2</span><div class="sec-b"><h3>Habit tracker</h3>${p.habits.length?`<div class="tablewrap"><table><thead><tr><th>Habit</th>${dates.map((d,i)=>`<th class="${d===t?'today-col':''}">${WD[i]}</th>`).join('')}</tr></thead><tbody>
     ${p.habits.map(hb=>`<tr><td>${esc(hb.name||'Unnamed habit')}</td>${dates.map(d=>{const doc=S.days.get(d);return `<td class="${d===t?'today-col':''}"><input type="checkbox" data-act="wh" data-date="${d}" data-h="${hb.id}" ${doc&&doc.habits[hb.id]?'checked':''} ${d>t?'disabled':''} aria-label="${esc(hb.name)} ${d}"></td>`;}).join('')}</tr>`).join('')}
     </tbody></table></div>`:`<p class="small muted">No habits yet.</p><button class="linkbtn" data-act="tab" data-tab="me">Add habits</button>`}</div></section>`;
-  h+=`<section class="sec"><span class="num">3</span><div class="sec-b"><h3>Daily focus this week</h3><ul class="wfocus">${dates.map((d,i)=>{const doc=S.days.get(d);const f=doc&&filled(doc.focus.text);
-    return `<li><span>${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]}</span><button class="linkbtn" style="text-align:left;color:inherit;font-weight:500" data-act="open-day" data-date="${d}">${f?esc(doc.focus.text):'<span class="muted">No focus set</span>'}</button>${f?(doc.focus.done?'<span class="chip ok">Done</span>':(d<t?'<span class="chip gold">Open</span>':'')):''}</li>`;}).join('')}</ul></div></section>`;
+  h+=`<section class="sec"><span class="num">3</span><div class="sec-b"><h3>Keel tasks this week</h3><ul class="wfocus">${dates.map((d,i)=>{const doc=S.days.get(d);const f=doc&&filled(doc.focus.text);
+    return `<li><span>${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]}</span><button class="linkbtn" style="text-align:left;color:inherit;font-weight:500" data-act="open-day" data-date="${d}">${f?esc(doc.focus.text):'<span class="muted">No keel task</span>'}</button>${f?(doc.focus.done?'<span class="chip ok">Done</span>':(d<t?'<span class="chip gold">Open</span>':'')):''}</li>`;}).join('')}</ul></div></section>`;
   h+=`<section class="sec"><span class="num">4</span><div class="sec-b"><h3>Notes &amp; ideas</h3><textarea class="lined" rows="3" ${b('notes')} aria-label="Notes and ideas">${esc(w.notes)}</textarea></div></section>`;
   h+=`<section class="sec"><span class="num">5</span><div class="sec-b"><h3>Wins &amp; progress</h3><textarea class="lined" rows="3" ${b('wins')} aria-label="Wins and progress">${esc(w.wins)}</textarea></div></section>`;
   h+=`<section class="sec eve"><span class="num">6</span><div class="sec-b"><h3>Weekly reflection</h3>
@@ -916,46 +948,33 @@ function viewWeek(){
 
 function viewMe(){
   const p=profile(), v=p.values, b=path=>`data-b="meta/profile/${path}"`;
-  let h=banner()+`<article class="sheet"><div class="dhead"><span class="label">Foundation</span><h1 class="date">My vision of myself</h1>
-    <p class="muted">Write the goals your future self reaches in each life area. The analyser compares your daily focus tasks with this vision.</p></div>
+  let h=banner()+`<article class="sheet"><div class="dhead"><span class="label">Heading</span><h1 class="date">Where I am heading</h1>
+    <p class="muted">Describe where you want to be in each part of your life. Progress compares your keel tasks with this heading, so you can see whether your days actually move you there.</p></div>
     <div class="row"><label class="small muted">Horizon <select class="line" style="width:auto" ${b('vision.horizon')}>${['1 year','2 years','5 years','10 years','25 years'].map(x=>`<option ${p.vision.horizon===x?'selected':''}>${x}</option>`).join('')}</select></label>
     <label class="small muted">Date <input class="line" style="width:auto" type="date" ${b('vision.date')} value="${esc(p.vision.date)}"></label></div>
     <div class="area-grid">${AREAS.map(([id,n,q])=>`<label><span class="label">${esc(n)}</span><span class="q">${esc(q)}</span><textarea class="lined" rows="3" ${b('vision.areas.'+id)} aria-label="${esc(n)}">${esc(p.vision.areas[id]||'')}</textarea></label>`).join('')}</div></article>`;
 
-  // values test
-  const all=[...VALUES,...v.custom];
-  h+=`<article class="sheet"><div class="dhead"><span class="label">Values test</span><h1 class="date">My values</h1>
-    <p class="muted">Your values are your why. Pick the ten that describe who you really are, not who you wish to be.</p></div>
-    <section class="sec"><span class="num">1</span><div class="sec-b"><div class="sec-h"><h3>Pick ten values</h3><span class="chip">${v.selected.length} of 10</span></div>
-    <p class="small muted">Prompts: I live where I live because… · I do my job because… · I like to be around people who… · It is unacceptable to me when…</p>
-    <div class="vchips">${all.map(x=>{const on=v.selected.includes(x);return `<button class="vchip" data-act="vpick" data-v="${esc(x)}" aria-pressed="${on}" ${!on&&v.selected.length>=10?'disabled':''}>${esc(x)}</button>`;}).join('')}</div>
+  // values compass (Daykeel's own method): choose up to 8 values, order them, mark each one on course or needs attention
+  const all=[...VALUES,...v.custom], ord=v.order;
+  h+=`<article class="sheet"><div class="dhead"><span class="label">Values compass</span><h1 class="date">What matters to me</h1>
+    <p class="muted">Values are the reasons behind your choices. Choose the ones you would defend even when it costs you something.</p></div>
+    <section class="sec"><span class="num">A</span><div class="sec-b"><div class="sec-h"><h3>Choose your values</h3><span class="chip">${ord.length} of ${MAX_VALUES}</span></div>
+    <p class="small muted">Tap to choose, tap again to remove. Not sure? Think of a decision you are proud of: which value made you take it?</p>
+    <div class="vchips">${all.map(x=>{const on=ord.includes(x);return `<button class="vchip" data-act="vpick" data-v="${esc(x)}" aria-pressed="${on}" ${!on&&ord.length>=MAX_VALUES?'disabled':''}>${esc(x)}</button>`;}).join('')}</div>
     <div class="row"><input class="line" style="max-width:16rem" type="text" id="newValue" placeholder="Add your own value" aria-label="Add your own value"><button class="ghost small" data-act="vadd">Add</button></div></div></section>`;
-  if(v.selected.length>=5){
-    h+=`<section class="sec"><span class="num">2</span><div class="sec-b"><div class="sec-h"><h3>Star your five most important</h3><span class="chip gold">${v.top.length} of 5</span></div>
-      <p class="small muted">Listen to your feeling more than your reasoning. Which five give you the strongest tingle?</p>
-      <div class="vchips">${v.selected.map(x=>{const on=v.top.includes(x);return `<button class="vchip star" data-act="vstar" data-v="${esc(x)}" aria-pressed="${on}" ${!on&&v.top.length>=5?'disabled':''}>${on?'★ ':''}${esc(x)}</button>`;}).join('')}</div></div></section>`;
+  if(ord.length){
+    h+=`<section class="sec"><span class="num">B</span><div class="sec-b"><h3>Put them in order</h3>
+      <p class="small muted">Move the value you would choose first in a hard decision to the top. Then mark how well each one shows in your days right now.</p>
+      <ol class="rank">${ord.map((x,i)=>`<li><span class="n">${i+1}</span><span>${esc(x)}
+        <span class="order-btns"><button class="x" data-act="vmove" data-v="${esc(x)}" data-d="-1" ${i===0?'disabled':''} aria-label="Move ${esc(x)} up">↑</button><button class="x" data-act="vmove" data-v="${esc(x)}" data-d="1" ${i===ord.length-1?'disabled':''} aria-label="Move ${esc(x)} down">↓</button></span></span>
+        <span class="seg"><button data-act="vstatus" data-v="${esc(x)}" data-s="well" aria-pressed="${v.status[x]==='well'}">On course</button><button data-act="vstatus" data-v="${esc(x)}" data-s="more" aria-pressed="${v.status[x]==='more'}">Needs attention</button></span></li>`).join('')}</ol></div></section>`;
+    const attention=ord.filter(x=>v.status[x]==='more');
+    if(attention.length) h+=`<section class="sec"><span class="num">C</span><div class="sec-b"><h3>One step for each value that needs attention</h3>
+      <p class="small muted">Keep it small and concrete, something you can do this week.</p>
+      ${attention.map(x=>`<label style="display:flex;flex-direction:column;margin-top:6px"><span class="label">${esc(x)}</span><input class="line" type="text" ${b('values.notes.'+x)} value="${esc(v.notes[x]||'')}" placeholder="This week I will…" aria-label="Step for ${esc(x)}"></label>`).join('')}</div></section>`;
   }
-  if(v.top.length===5){
-    const pairs=[];for(let i=0;i<5;i++)for(let j=i+1;j<5;j++)pairs.push([v.top[i],v.top[j]]);
-    const doneN=pairs.filter(([a,c])=>v.pairs[[a,c].sort().join('|')]).length;
-    h+=`<section class="sec"><span class="num">3</span><div class="sec-b"><div class="sec-h"><h3>Compare each pair</h3><span class="chip">${doneN} of 10</span></div>
-      <p class="small muted">Which of the two matters more to you? Picture a real everyday decision.</p>
-      <div class="pairs">${pairs.map(([a,c])=>{const k=[a,c].sort().join('|'),w=v.pairs[k];return `<div class="pair"><button data-act="pair" data-k="${esc(k)}" data-v="${esc(a)}" aria-pressed="${w===a}">${esc(a)}</button><span>or</span><button data-act="pair" data-k="${esc(k)}" data-v="${esc(c)}" aria-pressed="${w===c}">${esc(c)}</button></div>`;}).join('')}</div></div></section>`;
-    if(doneN===10){
-      const rk=rankedValues();
-      h+=`<section class="sec"><span class="num">4</span><div class="sec-b"><h3>My value hierarchy</h3><ol class="rank">${rk.map((x,i)=>`<li><span class="n">${i+1}</span><span>${esc(x.name)}<span class="tally" aria-label="${x.wins} wins">${'|'.repeat(x.wins)||'·'}</span></span>
-        <span class="seg"><button data-act="vstatus" data-v="${esc(x.name)}" data-s="well" aria-pressed="${v.status[x.name]==='well'}">Living it well</button><button data-act="vstatus" data-v="${esc(x.name)}" data-s="more" aria-pressed="${v.status[x.name]==='more'}">Want more</button></span></li>`).join('')}</ol></div></section>`;
-      h+=`<section class="sec"><span class="num">5</span><div class="sec-b"><h3>Two values to work on</h3><p class="small muted">Which two of your five create the strongest need to bring them into your life?</p>
-        <div class="tags">${[0,1].map(i=>`<label>Value ${i+1}<select class="line" ${b('values.focus.'+i)} data-rerender><option value="">Choose</option>${rk.map(x=>`<option ${v.focus[i]===x.name?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>`).join('')}</div>
-        ${v.focus.filter(Boolean).map(name=>{const a=v.answers[name]||{};const bb=f=>b(`values.answers.${name}.${f}`);return `<div style="margin-top:12px"><span class="label">${esc(name)}</span>
-          <textarea class="lined" rows="2" ${bb('why')} placeholder="Why is it important to me and what does it include?" aria-label="Why">${esc(a.why||'')}</textarea>
-          <textarea class="lined" rows="2" ${bb('already')} placeholder="What do I already do that reflects it?" aria-label="Already">${esc(a.already||'')}</textarea>
-          <textarea class="lined" rows="2" ${bb('change')} placeholder="What should I stop or do more to live it better?" aria-label="Change">${esc(a.change||'')}</textarea></div>`;}).join('')}</div></section>`;
-    }
-  }
-  h+=`</article>`;
-  // habits
-  h+=`<article class="sheet" id="habits"><div class="dhead"><span class="label">Habits</span><h1 class="date">Habits I track</h1><p class="muted">These appear in step 8 of every day page and in the weekly tracker.</p></div>
+  h+=`</article>`;  // habits
+  h+=`<article class="sheet" id="habits"><div class="dhead"><span class="label">Habits</span><h1 class="date">Habits I track</h1><p class="muted">They appear on every day page (evening part) and in the weekly tracker.</p></div>
     <div class="habits">${p.habits.map((hb,i)=>`<div class="item"><input class="line" type="text" ${b('habits.'+i+'.name')} value="${esc(hb.name)}" aria-label="Habit name"><button class="x" data-act="hdel" data-i="${i}" aria-label="Remove habit">×</button></div>`).join('')||'<p class="small muted">No habits yet. Examples: 30 minutes of exercise, read 10 pages, no phone after 21:00.</p>'}</div>
     <div class="row"><input class="line" style="max-width:20rem" type="text" id="newHabit" placeholder="New habit" aria-label="New habit"><button class="ghost small" data-act="hadd">Add habit</button></div></article>`;
   return h;
@@ -969,7 +988,7 @@ function viewHistory(){
     h+=`<div class="month"><span class="label" style="padding:8px 0">${esc(parse(k+'-01').toLocaleDateString('en-GB',{month:'long',year:'numeric'}))}</span>${ds.map(d=>{const doc=S.days.get(d),s=dayStats(doc,p.habits);
       const cls=!s.journaled?'':s.score>=70?'g':s.score>=40?'m':'l';
       return `<button class="hrow" data-act="open-day" data-date="${d}"><span class="d">${esc(fmtShort(d))}<small>${esc(parse(d).toLocaleDateString('en-GB',{weekday:'short'}))}</small></span>
-        <span class="f">${filled(doc.focus.text)?(doc.focus.done?'✓ ':'')+esc(doc.focus.text):'<span class="muted">No focus set</span>'}</span>
+        <span class="f">${filled(doc.focus.text)?(doc.focus.done?'✓ ':'')+esc(doc.focus.text):'<span class="muted">No keel task</span>'}</span>
         ${s.journaled?`<span class="sc ${cls}">${s.score}</span>`:'<span class="small muted">empty</span>'}</button>`;}).join('')}</div>`;
   }
   h+=`</article>`;
@@ -1003,99 +1022,180 @@ function viewCalendar(){
   return banner()+`<article class="sheet"><div class="dhead"><div class="drow"><span class="label">Calendar</span>
     <div class="daynav"><button class="ghost" data-act="cal-go" data-d="-1" aria-label="Previous month">‹</button><button class="ghost small" data-act="cal-now" ${isNow?'disabled':''}>This month</button><button class="ghost" data-act="cal-go" data-d="1" aria-label="Next month">›</button></div></div>
     <h1 class="date">${esc(title)}</h1>
-    <p class="muted">${written?`${written} day${written===1?'':'s'} written · average score ${Math.round(scoreSum/written)} · daily focus done on ${focusDone} day${focusDone===1?'':'s'}.`:'No pages written this month yet.'} Click a day to open or create its page.</p></div>
+    <p class="muted">${written?`${written} day${written===1?'':'s'} written · average score ${Math.round(scoreSum/written)} · keel task done on ${focusDone} day${focusDone===1?'':'s'}.`:'No pages written this month yet.'} Click a day to open or create its page.</p></div>
     <div class="mcal"><div class="cal-head">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<span>${d}</span>`).join('')}</div><div class="cal-grid">${cells}</div></div>
     <div class="legend"><span><i style="background:var(--accent)"></i>score 70 and above</span><span><i style="background:var(--gold)"></i>40 to 69</span><span><i style="background:var(--bad)"></i>below 40</span><span><i style="border:2px solid var(--accent);background:transparent"></i>today</span></div>
     ${isNow?`<div class="row"><button class="btn" data-act="open-day" data-date="${S.date}">Open today</button></div>`:''}</article>`;
 }
 
-// Help: a complete user guide, grouped into topics that open on click.
+// Help: the complete Daykeel guide, grouped into topics that open on click.
 function viewHelp(){
   const url=location.protocol==='https:'?location.origin+location.pathname:'';
   const topic=(id,title,body,open)=>`<details class="help" id="help-${id}" ${open?'open':''}><summary>${title}</summary><div class="help-b">${body}</div></details>`;
   const topics=[
-  ['start','1. What this journal is',`
-    <p>The 6-Minute Journal is a daily planner based on the <em>6-Minute Success Journal</em> by Dominik Spenst. It takes about three minutes in the morning and three minutes in the evening.</p>
-    <ul><li><strong>Morning:</strong> gratitude, what you look forward to, one daily focus task, your other tasks, a to-relax list and appointments.</li>
-    <li><strong>Evening:</strong> your wins, the best moment, what you learned, a day rating and your habits.</li>
-    <li><strong>Every week:</strong> a weekly plan with habit tracker and a short reflection.</li>
-    <li><strong>Over time:</strong> the Progress tab shows whether you are doing what matters to you, based on your vision and values.</li></ul>
-    <p>Your journal is private. Nobody else can read it, and the app has no server that stores your entries.</p>`,true],
+  ['start','1. What Daykeel is',`
+    <p>A keel is the fin under a boat that keeps it steady and on course. Daykeel does the same for your days: a few minutes in the morning to set your course, a few minutes in the evening to log how it went.</p>
+    <ul><li><strong>Morning, set your course:</strong> one keel task, your next tasks, something to recharge, gratitude and a bright spot.</li>
+    <li><strong>Evening, log the day:</strong> your win, a highlight, a lesson, a rating and your habits.</li>
+    <li><strong>Every week:</strong> a weekly plan with a habit tracker and a short review.</li>
+    <li><strong>Over time:</strong> Progress shows whether your days move you towards your heading and your values.</li></ul>
+    <p>Daykeel is private. Your entries are stored only in your own OneDrive or folder; there is no Daykeel server.</p>`,true],
   ['setup','2. First start: sign in or choose a folder',`
     <p><strong>On a phone or tablet:</strong></p>
-    <ol><li>Open ${url?`<code>${esc(url)}</code>`:'the journal link'} in Safari (iPhone) or Chrome (Android).</li>
+    <ol><li>Open ${url?`<code>${esc(url)}</code>`:'the Daykeel link'} in Safari (iPhone) or Chrome (Android).</li>
     <li>Tap <strong>Sign in with Microsoft</strong> and use your work or personal Microsoft account.</li>
-    <li>Confirm the permission once. The app may only use its own folder <code>OneDrive › Apps › 6-Minute Journal</code>, nothing else.</li></ol>
+    <li>Confirm the permission once. Daykeel may only use its own folder <code>${esc(APP_FOLDER_LABEL)}</code>, nothing else.</li></ol>
     <p><strong>On a PC (Edge or Chrome):</strong> you have two choices.</p>
     <ul><li><strong>Microsoft sign-in</strong>, exactly as on the phone.</li>
-    <li><strong>A folder on your PC:</strong> open <em>Settings → Journal folder → Choose folder…</em>. The Windows folder window opens; browse to the folder, click <strong>Select Folder</strong> and then <strong>Allow</strong> (or "Edit files") when the browser asks. To stay in sync with your phone, choose <code>OneDrive › Apps › 6-Minute Journal</code> in your OneDrive folder.</li></ul>
-    <p><strong>Work accounts:</strong> if Microsoft shows <em>"Need admin approval"</em>, your IT department has to approve the app once for your organisation. Personal accounts confirm it themselves.</p>`],
+    <li><strong>A folder on your PC:</strong> open <em>Settings → Journal folder → Choose folder…</em>. The Windows folder window opens; browse to the folder, click <strong>Select Folder</strong>, then <strong>Allow</strong> (or "Edit files") when the browser asks. To stay in sync with your phone, choose <code>${esc(APP_FOLDER_LABEL)}</code> inside your OneDrive folder.</li></ul>
+    <p><strong>Work accounts:</strong> if Microsoft shows <em>"Need admin approval"</em>, your IT department has to approve Daykeel once for your organisation. Personal accounts confirm it themselves.</p>`],
   ['install','3. Install it like an app',`
     <ul><li><strong>iPhone:</strong> in Safari tap <strong>Share</strong> → <strong>Add to Home Screen</strong> → <strong>Add</strong>.</li>
     <li><strong>Android:</strong> in Chrome tap <strong>⋮</strong> → <strong>Install app</strong> (or "Add to Home screen").</li>
-    <li><strong>PC (Edge):</strong> menu <strong>…</strong> → <strong>Apps</strong> → <strong>Install this site as an app</strong>. It then has its own window, Start menu entry and taskbar icon. In Chrome: menu <strong>⋮</strong> → <strong>Cast, save and share</strong> → <strong>Install page as app</strong>.</li></ul>
+    <li><strong>PC (Edge):</strong> menu <strong>…</strong> → <strong>Apps</strong> → <strong>Install this site as an app</strong>. Daykeel then has its own window, Start menu entry and taskbar icon. In Chrome: menu <strong>⋮</strong> → <strong>Cast, save and share</strong> → <strong>Install page as app</strong>.</li></ul>
     <p>The installed app updates itself whenever a new version is published.</p>`],
   ['calendar','4. The calendar (start page)',`
-    <p>The app always opens on the calendar of the current month. Each day you wrote shows its <strong>day score</strong> in colour:</p>
+    <p>Daykeel always opens on the calendar of the current month. Each day you wrote shows its <strong>day score</strong> in colour:</p>
     <ul><li><span class="sc g">70+</span> strong day &nbsp; <span class="sc m">40 to 69</span> medium &nbsp; <span class="sc l">below 40</span> weak.</li>
-    <li>Today has a frame. Days without a page are plain. The line under each number shows that day's focus task (on a PC).</li></ul>
-    <p>Use <strong>‹ ›</strong> to change the month and <strong>This month</strong> to come back. <strong>Click a day</strong> to open it. The app first reads the saved page; if the day has no page yet you see <em>"This page is empty"</em> with the button <strong>Create page for …</strong>. A page is only ever created when you click that button.</p>`],
+    <li>Today has a frame. Days without a page are plain. On a PC, the line under each number shows that day's keel task.</li></ul>
+    <p>Use <strong>‹ ›</strong> to change the month and <strong>This month</strong> to come back. <strong>Click a day</strong> to open it. Daykeel first reads the saved page; if the day has no page yet you see <em>"This page is empty"</em> with <strong>Create page for …</strong>. A page is only ever created when you click that button.</p>`],
   ['day','5. Filling in a day',`
-    <ol><li><strong>Grateful for:</strong> up to three things or people.</li>
-    <li><strong>Looking forward to:</strong> something you will enjoy today.</li>
-    <li><strong>Daily focus</strong> (the slice of cake): the one task that makes the day a success. Tag it with a life area and a value so Progress can check your balance.</li>
-    <li><strong>To-do list:</strong> tasks 2 and 3 ("whipped cream"), then everything else ("cherries on top"). Tick them off during the day.</li>
-    <li><strong>To-relax list:</strong> planned rest, taken as seriously as a meeting.</li>
-    <li><strong>Appointments and notes.</strong></li>
-    <li><strong>Evening:</strong> mini win, best moment, what you learned, and a rating from 1 to 5.</li>
-    <li><strong>Habits:</strong> tick the habits you did today.</li></ol>
+    <p><strong>Morning, set your course</strong></p>
+    <ol><li><strong>Keel task:</strong> the one task that makes today a good day if nothing else gets done. Tag it with a life area and a value so Progress can check your balance.</li>
+    <li><strong>Tasks:</strong> two <em>next up</em> tasks, then everything <em>also today</em>. Tick them off during the day.</li>
+    <li><strong>Recharge:</strong> planned breaks and rest, taken as seriously as a meeting.</li>
+    <li><strong>Gratitude:</strong> up to three people, things or moments.</li>
+    <li><strong>Bright spot:</strong> something today you will enjoy.</li>
+    <li><strong>Schedule and notes.</strong></li></ol>
+    <p><strong>Evening, log the day</strong></p>
+    <ol start="7"><li><strong>Logbook:</strong> win of the day, highlight, lesson, and a rating from 1 to 5.</li>
+    <li><strong>Habits:</strong> tick the habits you kept today.</li></ol>
     <p>Grey italic sentences are only examples; they are never saved. Everything you type is saved automatically; the status at the top right shows <em>Saving…</em> and then <em>Saved to OneDrive</em> or <em>Saved to folder</em>.</p>
-    <p><strong>In the evening</strong> click <strong>Finish day &amp; prepare tomorrow</strong>: today is archived and tomorrow's page is created. Unfinished tasks move to tomorrow and show <span class="carried">↻ 1</span>, which counts how often they were postponed.</p>`],
+    <p><strong>In the evening</strong> click <strong>Close the day &amp; set tomorrow</strong>: today is archived and tomorrow's page is created. Unfinished tasks move to tomorrow and show <span class="carried">↻ 1</span>, which counts how often they were postponed.</p>`],
   ['edit','6. Correcting an earlier day',`
-    <p>Finished days and past days are <strong>archived</strong> and locked against accidental changes. To change one, open it in the calendar, click <strong>Edit page</strong>, make your changes and click <strong>Save</strong>. The page is updated and locked again, and it notes <em>"Last changed after archiving"</em>. You can also create and fill in a page for a past day you forgot.</p>`],
+    <p>Closed days and past days are <strong>archived</strong> and locked against accidental changes. To change one, open it in the calendar, click <strong>Edit page</strong>, make your changes and click <strong>Save</strong>. The page is updated, locked again and marked <em>"Last changed after archiving"</em>. You can also create and fill in a page for a past day you forgot.</p>`],
   ['week','7. Week',`
-    <p>The weekly page has a calendar for appointments, a habit tracker for all seven days, notes, wins and a short weekly reflection with a rating. It also lists each day's focus task, so you see the week at a glance.</p>`],
-  ['values','8. Vision & values (do this first)',`
-    <ol><li><strong>Vision:</strong> describe your future self in six life areas (body and mind, career, family and friends, attitude, finances, leisure).</li>
-    <li><strong>Values test:</strong> pick the ten values that describe you, star the five most important, then compare them in pairs. The app ranks them for you.</li>
-    <li>Mark each value as <em>living it well</em> or <em>want more</em>, and answer three questions for the two values you want to work on.</li>
+    <p>The weekly page has a calendar for appointments, a habit tracker for all seven days, notes, wins and a short weekly review with a rating. It also lists each day's keel task, so you see the week at a glance.</p>`],
+  ['values','8. Heading & values (do this first)',`
+    <ol><li><strong>Heading:</strong> describe where you want to be in six areas of life (health and energy, work and growth, people, mindset, money, joy and play) and pick a time horizon.</li>
+    <li><strong>Values compass:</strong> choose up to eight values you would defend even when it costs you something, then put them in order with ↑ ↓.</li>
+    <li>Mark each value <em>on course</em> or <em>needs attention</em>. For every value that needs attention, write one small step for this week.</li>
     <li><strong>Habits:</strong> add the habits you want to track; they appear on every day page and in the weekly tracker.</li></ol>`],
   ['progress','9. Progress and the day score',`
-    <p>The <strong>day score</strong> (0 to 100) is: daily focus done 40, share of tasks 2 and 3 done 20, at least one relax item done 15, share of habits done 15, evening reflection filled 10.</p>
-    <p>The Progress tab shows for 7, 30 or 90 days: focus and to-do completion, average score, streak, a score chart, where your focus went by life area and value, habit rates, postponed tasks and a weekly table. The sentences under <em>What the numbers say</em> point out what to improve. <strong>Copy data for a Claude chat</strong> copies a summary you can paste into Claude for a written coaching review.</p>`],
+    <p>The <strong>day score</strong> (0 to 100) is: keel task done 40, share of next-up tasks done 20, at least one recharge item done 15, share of habits done 15, logbook filled 10.</p>
+    <p>For 7, 30 or 90 days, Progress shows keel-task and to-do completion, average score, streak, a score chart, where your keel tasks went by life area and value, habit rates, postponed tasks and a weekly table. The sentences under <em>What the numbers say</em> point out what to improve. <strong>Copy data for a Claude chat</strong> copies a summary you can paste into an AI assistant for a written review.</p>`],
   ['sync','10. Using several devices',`
-    <ul><li>All devices that use the same Microsoft account (or the same OneDrive folder) show the same journal.</li>
-    <li>The app fetches changes when you come back to it and every 45 seconds. <strong>Settings → Sync now</strong> does it immediately.</li>
-    <li>If two devices change the same page, nothing is overwritten: the app combines both versions.</li>
+    <ul><li>All devices that use the same Microsoft account (or the same OneDrive folder) show the same Daykeel.</li>
+    <li>Daykeel fetches changes when you come back to it and every 45 seconds. <strong>Settings → Sync now</strong> does it immediately.</li>
+    <li>If two devices change the same page, nothing is overwritten: Daykeel combines both versions.</li>
     <li>Best practice: wait until the status shows <em>Saved</em> before closing the app.</li></ul>`],
   ['settings','11. Settings and backup',`
-    <ul><li><strong>Journal folder:</strong> shows where your journal is saved. On a PC, <strong>Choose folder…</strong> opens the Windows folder window; <strong>Use Microsoft sign-in instead</strong> switches back. With the sign-in you can also keep separate journals in subfolders.</li>
+    <ul><li><strong>Journal folder:</strong> shows where your entries are saved. On a PC, <strong>Choose folder…</strong> opens the Windows folder window; <strong>Use Microsoft sign-in instead</strong> switches back. With the sign-in you can also keep separate journals in subfolders.</li>
     <li><strong>Sync now</strong> and the time of the last sync.</li>
     <li><strong>Account:</strong> the signed-in account and <strong>Sign out</strong>.</li>
     <li><strong>App version</strong> at the bottom of the Sync section.</li>
-    <li><strong>Archive → Save snapshot</strong> stores the whole journal in one file in <code>backups</code>; <strong>Import from file</strong> loads it back.</li></ul>`],
+    <li><strong>Archive → Save snapshot</strong> stores everything in one file in <code>backups</code>; <strong>Import from file</strong> loads it back.</li></ul>`],
   ['files','12. Your files and privacy',`
-    <p>Your journal is a set of small files: <code>data/days</code> (one file per day), <code>data/weeks</code>, <code>data/meta/profile.json</code> (vision, values, habits), <code>pages</code> (a readable copy of each day) and <code>backups</code>. They live only in your own OneDrive or folder. The app code is public, your entries are not. Signing out removes the sign-in from this device; your files stay in OneDrive.</p>`],
-  ['trouble','13. Troubleshooting',`
+    <p>Your entries are a set of small files: <code>data/days</code> (one file per day), <code>data/weeks</code>, <code>data/meta/profile.json</code> (heading, values, habits), <code>pages</code> (a readable copy of each day) and <code>backups</code>. They live only in your own OneDrive or folder. The app code is public, your entries are not. Signing out removes the sign-in from this device; your files stay in OneDrive.</p>`],
+  ['ai','13. AI helper',`
+    <p><strong>Inside Daykeel (your own key):</strong> open <em>Settings → Connect your AI</em>, choose a provider (Claude, ChatGPT, Gemini or any OpenAI-compatible service such as OpenRouter, Mistral, Groq, Ollama or LM Studio), paste your API key, click <strong>Load models</strong>, pick a model, <strong>Test connection</strong>, then <strong>Save</strong>. The key stays only on that device; the provider bills you for usage.</p>
+    <p>In the <strong>AI</strong> tab, use a quick action or ask your own question. You can paste text, for example goals copied from Notion. When the AI proposes changes (weekly goals, keel tasks, tasks, recharge items, habits), you see them as a list: tick what you want and click <strong>Apply selected</strong>. Nothing changes without your confirmation.</p>
+    <p><strong>From an outside AI:</strong> if your AI can reach your OneDrive and tools like Notion, click <strong>Write AI guide</strong> once in the AI tab, then <strong>Copy instructions</strong> and paste them into your AI chat with your request, for example <em>"Take my weekly goals from Notion and add them to Daykeel for this week."</em></p>`],
+  ['trouble','14. Troubleshooting',`
     <dl class="faq">
-    <dt>I don't see the latest version (for example no calendar).</dt><dd>PC: press <strong>Ctrl + Shift + R</strong>. iPhone: close the app completely and open it again; if that does not help, delete the website data for the journal in Settings → Safari → Advanced → Website Data. Settings shows the app version.</dd>
-    <dt>"Need admin approval" when signing in.</dt><dd>Your organisation must approve the app once. Ask your IT department.</dd>
+    <dt>I don't see the latest version.</dt><dd>PC: press <strong>Ctrl + Shift + R</strong>. iPhone: close the app completely and open it again; if that does not help, delete the website data for Daykeel in Settings → Safari → Advanced → Website Data. Settings shows the app version.</dd>
+    <dt>"Need admin approval" when signing in.</dt><dd>Your organisation must approve Daykeel once. Ask your IT department.</dd>
     <dt>Error AADSTS50011 after signing in.</dt><dd>The web address is not registered for the app. The person who manages the app registration must add the exact address, including the final slash.</dd>
     <dt>The status shows "Not saved · retry".</dt><dd>There was no connection. Your text stays on screen; tap the status to try again once you are online.</dd>
     <dt>"Not saved · sign in".</dt><dd>Your sign-in expired. Tap the status to sign in again; your changes are kept and saved afterwards.</dd>
     <dt>A page looks empty on my second device.</dt><dd>Open Settings → <strong>Sync now</strong>, then open the day again from the calendar. Make sure both devices use the same account or folder (Settings → Journal folder).</dd>
-    <dt>"Choose folder…" is missing.</dt><dd>Phones and tablets have no folder window for websites. Use the Microsoft sign-in there; on a PC use Edge or Chrome.</dd>
-    <dt>"The journal folder could not be read".</dt><dd>Check the internet connection, or choose the folder again in Settings. The app never writes anything when it cannot read your files.</dd></dl>`]
+    <dt>"The latest version of this page could not be loaded".</dt><dd>Daykeel shows the page as last loaded and changes nothing. Tap <strong>Try again</strong>; if it keeps happening, note the text after "Details" for whoever supports you.</dd>
+    <dt>"Choose folder…" is missing.</dt><dd>Phones and tablets have no folder window for websites. Use the Microsoft sign-in there; on a PC use Edge or Chrome.</dd></dl>`]
   ];
-  return banner()+`<article class="sheet"><div class="dhead"><span class="label">Help</span><h1 class="date">How to use the 6-Minute Journal</h1>
-    <p class="muted">Tap a topic to open it. New users: read topics 2, 4 and 5 first.</p></div>
+  return banner()+`<article class="sheet"><div class="dhead"><span class="label">Help</span><h1 class="date">How to use Daykeel</h1>
+    <p class="muted">Tap a topic to open it. New here? Read topics 2, 4 and 5 first.</p></div>
     <nav class="help-toc" aria-label="Help topics">${topics.map(([id,title])=>`<a href="#help-${id}" data-help="${id}">${esc(title)}</a>`).join('')}</nav>
     ${topics.map(([id,title,body,open])=>topic(id,title,body,open)).join('')}
     <p class="small muted">App version: ${esc(APP_VERSION)}</p></article>`;
 }
 
+// AI tab: the in-app assistant (own key) and the connection for outside AIs.
+function viewAI(){
+  const c=aiCfg(), ready=aiReady();
+  let h=banner()+`<article class="sheet"><div class="dhead"><span class="label">AI helper</span><h1 class="date">Plan and reflect with your AI</h1>
+    <p class="muted">${ready?`Connected to <strong>${esc(AI_PROVIDERS[c.provider].label)}</strong>, model <code>${esc(c.model)}</code>. Each question sends your heading, values, habits, this week's goals and your last 14 days to that provider, using your own key. Nothing changes in Daykeel until you confirm.`
+      :'Connect the AI of your choice (Claude, ChatGPT, Gemini or another) with your own key, then ask for help with planning, goals and reviews.'}</p></div>`;
+  if(!ready) h+=`<div class="row"><button class="btn" data-act="tab" data-tab="settings" data-anchor="ai-settings">Connect an AI</button></div>`;
+  else{
+    const quick=[['Plan my week','Look at my weekly goals, values and the last days, and propose a keel task for each remaining day of this week.'],
+      ['Suggest today\'s keel task','Suggest one keel task for today, plus two next-up tasks, based on my weekly goals and recent days.'],
+      ['Turn goals into a plan','I will paste my goals below. Add them as weekly goals for this week and suggest which day to tackle each one.'],
+      ['Review my last 7 days','Review my last 7 days: what went well, what slipped, and three small actions for next week.']];
+    h+=`<div class="ai-quick">${quick.map(([l,q])=>`<button class="vchip" data-act="ai-quick" data-q="${esc(q)}" ${S.aiBusy?'disabled':''}>${esc(l)}</button>`).join('')}</div>
+      <div class="ai-chat" id="aiChat">${S.aiChat.map((m,idx)=>{
+        if(m.role==='user') return `<div class="ai-msg user">${esc(m.content)}</div>`;
+        if(m.error) return `<div class="ai-msg ai"><p class="err">${esc(m.error)}</p></div>`;
+        const shown=m.content.replace(/```daykeel-actions[\s\S]*?```/g,'').trim();
+        let acts='';
+        if(m.actions&&m.actions.length) acts=m.applied!=null?`<p class="flash">Applied ${m.applied} change${m.applied===1?'':'s'}.</p>`
+          :`<div class="ai-actions"><strong>Suggested changes</strong>${m.actions.map((x,i)=>`<label><input type="checkbox" data-aipick="${idx}" data-i="${i}" checked> <span>${esc(describeAiAction(x))}</span></label>`).join('')}
+            <div class="row"><button class="btn" data-act="ai-apply" data-m="${idx}">Apply selected</button><button class="ghost small" data-act="ai-dismiss" data-m="${idx}">Dismiss</button></div></div>`;
+        return `<div class="ai-msg ai"><div class="ai-out">${md(shown||'(No text, only suggested changes.)')}</div>${acts}</div>`;}).join('')}
+      ${S.aiBusy?`<div class="ai-msg ai"><p class="muted">Thinking… <button class="linkbtn" data-act="ai-stop">Stop</button></p></div>`:''}</div>
+      <textarea class="box" id="aiInput" placeholder="Ask anything, or paste your goals or tasks (for example from Notion) and say what to do with them." aria-label="Message to the AI">${esc(S.aiDraft||'')}</textarea>
+      <div class="row"><button class="btn" data-act="ai-send" ${S.aiBusy?'disabled':''}>Send</button>${S.aiChat.length?'<button class="ghost small" data-act="ai-clear">Clear conversation</button>':''}</div>`;
+  }
+  h+=`</article>`;
+  h+=`<article class="sheet"><div class="dhead"><span class="label">Outside AI</span><h1 class="date">Use Daykeel from your own AI</h1>
+    <p class="muted">If you already use an AI that can reach your OneDrive and other tools (for example Claude with the Notion and Microsoft 365 connectors), it can read and write Daykeel directly. Ask it things like <em>"Take my weekly goals from Notion and add them to Daykeel for this week."</em></p></div>
+    <ol class="small" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
+      <li>Click <strong>Write AI guide</strong> once. It saves <code>ai/DAYKEEL-AI-GUIDE.md</code> into your Daykeel folder, explaining the files and rules to any AI.</li>
+      <li>Click <strong>Copy instructions</strong>, paste them into your AI chat and add your request at the end.</li>
+      <li>Come back to Daykeel; changes appear within a minute, or immediately with <em>Settings → Sync now</em>.</li></ol>
+    <div class="row"><button class="btn sec2" data-act="ai-guide">Write AI guide</button><button class="ghost small" data-act="ai-copy-prompt">Copy instructions</button></div>
+    ${S.aiGuideMsg?`<p class="small">${esc(S.aiGuideMsg)}</p>`:''}
+    ${S.aiCopyText?`<textarea class="code" readonly id="aiCopyText">${esc(S.aiCopyText)}</textarea>`:''}</article>`;
+  return h;
+}
+// Settings card: choose provider, key and model (stored on this device only).
+function viewAISettings(){
+  const f=S.aiForm||aiCfg()||{provider:'anthropic',key:'',model:'claude-opus-5-5',baseUrl:''};
+  const prov=AI_PROVIDERS[f.provider]||AI_PROVIDERS.anthropic;
+  return `<article class="sheet" id="ai-settings"><div class="dhead"><span class="label">AI assistant</span><h1 class="date">Connect your AI</h1>
+    <p class="muted">Choose any provider and use your own key. The key is stored only in this browser on this device and is sent only to the provider you choose. Usage is billed by that provider to you.</p></div>
+    <div class="tags">
+      <label>Provider<select class="line" id="aiProvider">${Object.entries(AI_PROVIDERS).map(([k,v])=>`<option value="${k}" ${f.provider===k?'selected':''}>${esc(v.label)}</option>`).join('')}</select></label>
+      <label>API key<input class="line" type="password" id="aiKey" value="${esc(f.key||'')}" placeholder="${esc(prov.hint)}" autocomplete="off"></label>
+      ${f.provider==='custom'?`<label>Base URL<input class="line" type="url" id="aiBase" value="${esc(f.baseUrl||'')}" placeholder="https://openrouter.ai/api/v1 or http://localhost:11434/v1"></label>`:''}
+      <label>Model<input class="line" type="text" id="aiModel" list="aiModelList" value="${esc(f.model||'')}" placeholder="Click Load models"><datalist id="aiModelList">${S.aiModels.map(m=>`<option value="${esc(m)}">`).join('')}</datalist></label>
+    </div>
+    ${prov.keyUrl?`<p class="small muted">Get a key at <a href="${prov.keyUrl}" target="_blank" rel="noopener">${esc(prov.keyUrl.replace(/^https:\/\//,''))}</a>.</p>`:''}
+    <div class="row"><button class="ghost small" data-act="ai-load-models">Load models</button><button class="ghost small" data-act="ai-test">Test connection</button><button class="btn" data-act="ai-save">Save</button>${aiCfg()?'<button class="ghost small" data-act="ai-remove">Remove key</button>':''}</div>
+    ${S.aiMsg?`<p class="small">${esc(S.aiMsg)}</p>`:''}</article>`;
+}
+function readAiForm(){
+  const v=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const cur=S.aiForm||aiCfg()||{};
+  return{provider:v('aiProvider')||cur.provider||'anthropic',key:v('aiKey'),model:v('aiModel'),baseUrl:v('aiBase')||cur.baseUrl||''};
+}
+async function aiSend(text){
+  if(!text||S.aiBusy) return;
+  const c=aiCfg(); if(!c) return;
+  S.aiChat.push({role:'user',content:text}); S.aiDraft=''; S.aiBusy=true; render(); scrollAiToEnd();
+  const history=S.aiChat.filter(m=>!m.error).slice(-12).map(m=>({role:m.role,content:m.content}));
+  const ctl=S.aiCtl=new AbortController();
+  try{
+    const reply=await aiChat(c,AI_SYSTEM+'\n\nDAYKEEL DATA (JSON):\n'+aiContext(),history,ctl.signal);
+    S.aiChat.push({role:'assistant',content:reply||'(empty reply)',actions:parseAiActions(reply||'')});
+  }catch(e){
+    S.aiChat.push({role:'assistant',error:e&&e.name==='AbortError'?'Stopped.':'The AI could not answer. '+(e&&e.message||e)});
+  }
+  S.aiBusy=false; render(); scrollAiToEnd();
+}
+function scrollAiToEnd(){const el=document.getElementById('aiInput');if(el) el.scrollIntoView({block:'center'});}
+
 function folderLabel(){
-  if(CLOUD_MODE) return 'OneDrive (Microsoft sign-in) › Apps › 6-Minute Journal'+(S.sub?' › '+S.sub:'');
+  if(CLOUD_MODE) return APP_FOLDER_LABEL+' (Microsoft sign-in)'+(S.sub?' › '+S.sub:'');
   return S.dir?(S.dir.path||('Folder on this PC: '+S.dir.name)):'';
 }
 function viewSettings(){
@@ -1108,8 +1208,8 @@ function viewSettings(){
   else if(PICKER){
     h+=`<div class="row"><button class="btn sec2" data-act="connect" data-mode="pick">Choose folder…</button>${!CLOUD_MODE&&CLOUD_AVAILABLE?'<button class="ghost small" data-act="use-cloud">Use Microsoft sign-in instead</button>':''}</div>
       <p class="small muted">Opens the Windows folder window: browse to a folder, click <strong>Select Folder</strong>, then allow the browser to edit files there.
-      ${CLOUD_AVAILABLE?'To stay in sync with your phone, choose <code>OneDrive - ICODOS GmbH › Apps › 6-Minute Journal</code> (your phone saves there through the Microsoft sign-in).':'Choose a folder that contains a journal (with a <code>data</code> folder) or an empty folder to start a new one.'}</p>`;
-  } else if(CLOUD_MODE) h+=`<p class="small muted">On phones and tablets the journal is saved through your Microsoft sign-in in <code>Apps › 6-Minute Journal</code>. Choosing your own folder is possible on a PC in Edge or Chrome.</p>`;
+      ${CLOUD_AVAILABLE?`To stay in sync with your phone, choose <code>${esc(APP_FOLDER_LABEL)}</code> inside your OneDrive folder (your phone saves there through the Microsoft sign-in).`:'Choose a folder that contains a journal (with a <code>data</code> folder) or an empty folder to start a new one.'}</p>`;
+  } else if(CLOUD_MODE) h+=`<p class="small muted">On phones and tablets the journal is saved through your Microsoft sign-in in <code>${esc(APP_FOLDER_LABEL)}</code>. Choosing your own folder is possible on a PC in Edge or Chrome.</p>`;
   if(CLOUD_MODE) h+=`<details><summary class="small">Separate journals in subfolders</summary><p class="small muted">Inside the app folder you can keep separate journals, for example one per year. Leave the field empty for the main journal. Set the same name on every device that should show this journal.</p>
     <div class="row"><input class="line" style="max-width:18rem" type="text" id="subFolder" value="${esc(S.sub)}" placeholder="Main journal (no subfolder)" aria-label="Subfolder name"><button class="btn sec2" data-act="set-sub">Use this subfolder</button></div></details>`;
   if(S.folderMsg) h+=`<p class="small">${esc(S.folderMsg)}</p>`;
@@ -1124,6 +1224,7 @@ function viewSettings(){
   if(CLOUD_MODE) h+=`<article class="sheet"><div class="dhead"><span class="label">Account</span><h1 class="date">Microsoft account</h1>
     <p class="muted">Signed in as <strong>${esc(Auth.user?(Auth.user.name||Auth.user.username):'')}</strong>${Auth.user&&Auth.user.name?` (${esc(Auth.user.username)})`:''}.</p></div>
     <div class="row"><button class="ghost small" data-act="signout">Sign out</button></div></article>`;
+  h+=viewAISettings();
   // Reminders (Windows program only)
   if(NATIVE&&S.settings){const st=S.settings;
     h+=`<article class="sheet"><div class="dhead"><span class="label">Reminders</span><h1 class="date">Reminders &amp; startup</h1>
@@ -1159,7 +1260,7 @@ function viewProgress(){
     <span class="seg">${[[7,'7 days'],[30,'30 days'],[90,'90 days'],['all','All']].map(([k,l])=>`<button data-act="range" data-r="${k}" aria-pressed="${String(S.range)===String(k)}">${l}</button>`).join('')}</span></div>
     <h1 class="date">Am I doing what I should?</h1><p class="muted">Based on ${r.journaled} journaled day${r.journaled===1?'':'s'} in ${esc(r.label)}.</p></div>
     <div class="kpis">
-      <div class="kpi"><strong>${pctTxt(pct(r.focusDone,r.focusSet))}</strong><span>Daily focus completed</span></div>
+      <div class="kpi"><strong>${pctTxt(pct(r.focusDone,r.focusSet))}</strong><span>Keel task completed</span></div>
       <div class="kpi"><strong>${pctTxt(pct(r.todosDone,r.todos))}</strong><span>To-dos completed</span></div>
       <div class="kpi"><strong>${r.scoreAvg}</strong><span>Average day score</span></div>
       <div class="kpi"><strong>${r.streak}</strong><span>Day streak</span></div></div>
@@ -1167,19 +1268,19 @@ function viewProgress(){
     <div class="legend"><span><i style="background:var(--accent)"></i>70 and above</span><span><i style="background:var(--gold)"></i>40 to 69</span><span><i style="background:var(--bad)"></i>below 40</span><span><i style="background:var(--line)"></i>no entry</span></div></div>
     <div><span class="label">What the numbers say</span><ul class="insights">${r.insights.map(([c,tx])=>`<li class="${c}">${esc(tx)}</li>`).join('')}</ul></div></article>`;
   const maxA=Math.max(1,...r.areas.map(a=>a.n));
-  h+=`<article class="sheet"><div class="dhead"><span class="label">Alignment</span><h1 class="date">Where your focus went</h1><p class="muted">Daily focus tasks per life area. Red marks an area that is in your vision but got no focus.</p></div>
-    <div>${r.areas.map(a=>hbar(a.name,a.n,maxA,a.n,a.vision&&a.n===0)).join('')}${r.untagged?`<p class="small muted">${r.untagged} focus task${r.untagged===1?' is':'s are'} not tagged with a life area.</p>`:''}</div>
-    ${r.values.length?`<div><span class="label">Focus tasks per value</span>${r.values.map(v=>hbar(v.name+(v.more?' ★':''),v.n,Math.max(1,...r.values.map(x=>x.n)),v.n,v.more&&v.n===0)).join('')}<p class="small muted">★ marks values you want to live more.</p></div>`:''}</article>`;
+  h+=`<article class="sheet"><div class="dhead"><span class="label">Alignment</span><h1 class="date">Where your keel tasks went</h1><p class="muted">Keel tasks per life area. Red marks an area that is part of your heading but got no keel task.</p></div>
+    <div>${r.areas.map(a=>hbar(a.name,a.n,maxA,a.n,a.vision&&a.n===0)).join('')}${r.untagged?`<p class="small muted">${r.untagged} keel task${r.untagged===1?' is':'s are'} not tagged with a life area.</p>`:''}</div>
+    ${r.values.length?`<div><span class="label">Keel tasks per value</span>${r.values.map(v=>hbar(v.name+(v.more?' ★':''),v.n,Math.max(1,...r.values.map(x=>x.n)),v.n,v.more&&v.n===0)).join('')}<p class="small muted">★ marks values that need attention.</p></div>`:''}</article>`;
   h+=`<article class="sheet"><div class="dhead"><span class="label">Routine</span><h1 class="date">Lists, rest and habits</h1></div>
-    <div>${hbar('Morning filled',r.mornings,r.n,pctTxt(pct(r.mornings,r.n)))}${hbar('Evening reflected',r.evenings,r.n,pctTxt(pct(r.evenings,r.n)))}
-    ${hbar('Tasks 2 and 3 done',r.creamDone,r.cream,pctTxt(pct(r.creamDone,r.cream)))}${hbar('Relax item done',r.relaxDays,r.journaled,pctTxt(pct(r.relaxDays,r.journaled)))}
+    <div>${hbar('Course set (morning)',r.mornings,r.n,pctTxt(pct(r.mornings,r.n)))}${hbar('Logbook filled (evening)',r.evenings,r.n,pctTxt(pct(r.evenings,r.n)))}
+    ${hbar('Next-up tasks done',r.creamDone,r.cream,pctTxt(pct(r.creamDone,r.cream)))}${hbar('Recharge item done',r.relaxDays,r.journaled,pctTxt(pct(r.relaxDays,r.journaled)))}
     ${r.ratingAvg!=null?hbar('Average day rating',r.ratingAvg,5,r.ratingAvg.toFixed(1)):''}</div>
     ${r.habits.length?`<div class="tablewrap"><table><thead><tr><th>Habit</th><th>Done</th><th>Streak</th><th>Last 14 days</th></tr></thead><tbody>${r.habits.map(x=>`<tr><td>${esc(x.name)}</td><td>${pctTxt(x.rate)}</td><td>${x.streak}</td><td><span class="dots">${x.last.map(o=>`<i class="${o?'on':''}"></i>`).join('')}</span></td></tr>`).join('')}</tbody></table></div>`:''}
     ${r.chronic.length?`<div><span class="label">Tasks you keep postponing</span><ul class="insights">${r.chronic.map(([t,n])=>`<li class="bad">${esc(t)} <span class="carried">↻ ${n}</span></li>`).join('')}</ul></div>`:''}
-    <div class="tablewrap"><table><thead><tr><th>Week</th><th>Days</th><th>Focus</th><th>To-dos</th><th>Score</th></tr></thead><tbody>${r.weeks.map(w=>`<tr><td><button class="linkbtn" data-act="open-week" data-m="${w.monday}">W${esc(w.id.split('-W')[1])} · ${esc(fmtShort(w.monday))}</button></td><td>${w.journaled}/${w.days}</td><td>${pctTxt(w.focus)}</td><td>${pctTxt(w.todos)}</td><td>${w.score}</td></tr>`).join('')}</tbody></table></div></article>`;
+    <div class="tablewrap"><table><thead><tr><th>Week</th><th>Days</th><th>Keel task</th><th>To-dos</th><th>Score</th></tr></thead><tbody>${r.weeks.map(w=>`<tr><td><button class="linkbtn" data-act="open-week" data-m="${w.monday}">W${esc(w.id.split('-W')[1])} · ${esc(fmtShort(w.monday))}</button></td><td>${w.journaled}/${w.days}</td><td>${pctTxt(w.focus)}</td><td>${pctTxt(w.todos)}</td><td>${w.score}</td></tr>`).join('')}</tbody></table></div></article>`;
   const revs=[...S.reviews.entries()].sort((a,b)=>b[1].createdAt-a[1].createdAt);
   h+=`<article class="sheet"><div class="dhead"><span class="label">AI review</span><h1 class="date">Coaching review by Claude</h1>
-    <p class="muted">Two ways to get a review. In the Claude desktop app, open the Daily Plans folder and ask: <em>"Read the journal read-me and review my progress."</em> Claude reads every day file and can save its review into <code>data/reviews</code>, where it appears below. Or copy a ready-made summary of this period into any Claude chat.</p></div>
+    <p class="muted">Two ways to get a review. An AI assistant with access to your Daykeel folder can read the day files and save a review into <code>data/reviews</code>, where it appears below. Or copy a ready-made summary of this period into any Claude chat.</p></div>
     <div class="row"><button class="btn sec2" data-act="copy-prompt">Copy data for a Claude chat</button></div>
     ${S.copyText?`<textarea class="code" readonly id="copyText">${esc(S.copyText)}</textarea>`:''}
     <div class="ai-out" id="ai-out"></div>
@@ -1201,8 +1302,8 @@ function md(t){
 function buildPrompt(){
   const p=profile(), r=analyse(S.range);
   const vision=AREAS.map(([id,n])=>`- ${n}: ${p.vision.areas[id]||'(empty)'}`).join('\n');
-  const rk=rankedValues().map((x,i)=>`${i+1}. ${x.name}${p.values.status[x.name]==='more'?' (wants to live this more)':p.values.status[x.name]==='well'?' (lives it well)':''}`).join('\n')||'(values test not done)';
-  const ans=p.values.focus.filter(Boolean).map(n=>{const a=p.values.answers[n]||{};return `- ${n}: why: ${a.why||''}; already: ${a.already||''}; change: ${a.change||''}`;}).join('\n');
+  const rk=rankedValues().map((x,i)=>`${i+1}. ${x.name}${p.values.status[x.name]==='more'?' (needs attention)':p.values.status[x.name]==='well'?' (on course)':''}`).join('\n')||'(values compass not filled in)';
+  const ans=Object.entries(p.values.notes).filter(([n,t])=>filled(t)&&p.values.status[n]==='more').map(([n,t])=>`- ${n}: ${t}`).join('\n');
   const stats={period:r.label,days:r.n,journaledDays:r.journaled,streak:r.streak,focusSet:r.focusSet,focusDone:r.focusDone,todos:r.todos,todosDone:r.todosDone,
     tasks2and3:r.cream,tasks2and3Done:r.creamDone,relaxDays:r.relaxDays,eveningsReflected:r.evenings,averageDayRating:r.ratingAvg&&+r.ratingAvg.toFixed(2),averageDayScore:r.scoreAvg,
     focusPerLifeArea:Object.fromEntries(r.areas.map(a=>[a.name,a.n])),focusPerValue:Object.fromEntries(r.values.map(v=>[v.name,v.n])),
@@ -1212,12 +1313,12 @@ function buildPrompt(){
     area:AREA[d.focus.area]||'',value:d.focus.value,tasks:[...d.cream,...d.cherries].filter(t=>filled(t.text)).map(t=>(t.done?'[x] ':'[ ] ')+t.text),
     relax:d.relax.filter(t=>filled(t.text)).map(t=>(t.done?'[x] ':'[ ] ')+t.text),win:d.evening.win,bestMoment:d.evening.moment,learned:d.evening.learned,rating:d.evening.rating,score:x.s.score};});
   const wk=S.weeks.get(isoWeek(S.date));
-  return `You are an honest, warm coach for a person who keeps a daily journal based on the 6-Minute Success Journal method (daily focus task, tasks 2 and 3, to-relax list, gratitude, habits, evening reflection, life vision and personal values).
+  return `You are an honest, warm coach for a person who uses the Daykeel daily planner: each morning one keel task (the most important task), next-up tasks, recharge items, gratitude and a bright spot; each evening a logbook (win, highlight, lesson, rating) and habits; plus a heading (where they want to be in six life areas) and a values compass.
 Write a progress review in English for ${r.label}. Use short plain sentences. Never use dashes in the middle of a sentence. Refer to concrete entries and numbers from the data. If the data is thin, say so and explain what to record for a better review next time.
 Use exactly these headings, each line starting with "## ":
 ## Overall
 ## Are you working on what matters?
-(compare daily focus tasks with the vision areas and the values the person wants to live more)
+(compare keel tasks with the heading areas and the values that need attention)
 ## Patterns
 (what helps good days, what drags bad days, postponed tasks, rest, habits)
 ## Three actions for next week
@@ -1225,15 +1326,15 @@ Use exactly these headings, each line starting with "## ":
 ## A question to reflect on
 Keep the whole review under 420 words.
 
-VISION (${p.vision.horizon}):
+HEADING (${p.vision.horizon}):
 ${vision}
 
-VALUES (ranked):
+VALUES (in the person's order):
 ${rk}
-${ans?`\nVALUES BEING WORKED ON:\n${ans}\n`:''}
+${ans?`\nPLANNED STEPS FOR VALUES THAT NEED ATTENTION:\n${ans}\n`:''}
 HABITS: ${p.habits.map(h=>h.name).join(', ')||'(none)'}
 
-STATISTICS (day score: focus done 40, tasks 2 and 3 done 20, a relax item done 15, habits 15, evening reflection 10):
+STATISTICS (day score: keel task done 40, next-up tasks done 20, a recharge item done 15, habits 15, logbook filled 10):
 ${JSON.stringify(stats)}
 
 THIS WEEK'S NOTES: ${wk?JSON.stringify({wins:wk.wins,notes:wk.notes,reflection:wk.reflection}):'(none)'}
@@ -1242,9 +1343,153 @@ LAST 14 DAYS:
 ${JSON.stringify(recent)}`;
 }
 
+/* ---------- AI: bring your own assistant ----------
+   Each person connects the AI provider of their choice with their own key. The key and settings are kept
+   only in this browser (localStorage) and are sent only to that provider. Daykeel never runs a server. */
+const AI_PROVIDERS={
+  anthropic:{label:'Claude (Anthropic)',keyUrl:'https://console.anthropic.com/settings/keys',hint:'Starts with sk-ant-'},
+  openai:{label:'OpenAI (ChatGPT)',keyUrl:'https://platform.openai.com/api-keys',hint:'Starts with sk-'},
+  gemini:{label:'Google Gemini',keyUrl:'https://aistudio.google.com/apikey',hint:'From Google AI Studio'},
+  custom:{label:'Other, OpenAI-compatible (OpenRouter, Mistral, Groq, Ollama, LM Studio …)',keyUrl:'',hint:'Key if the service needs one'}
+};
+// Claude models that accept the server-side refusal fallback ("default" form).
+const CLAUDE_FALLBACK_MODELS=['claude-opus-5-5','claude-opus-5','claude-fable-5-1','claude-sonnet-5-5'];
+const aiCfg=()=>{try{return JSON.parse(localStorage.getItem('dk:ai')||'null');}catch(e){return null;}};
+const aiReady=()=>{const c=aiCfg();return !!(c&&c.provider&&c.model&&(c.key||c.provider==='custom'));};
+function aiSaveCfg(c){try{c?localStorage.setItem('dk:ai',JSON.stringify(c)):localStorage.removeItem('dk:ai');}catch(e){}}
+const customBase=c=>String(c.baseUrl||'').replace(/\/+$/,'');
+async function aiFetchJson(url,opts){
+  let r;try{r=await fetch(url,opts);}catch(e){throw new Error('The provider could not be reached (network or browser blocked the request).');}
+  let j=null;try{j=await r.json();}catch(e){}
+  if(!r.ok){const m=j&&(j.error&&(j.error.message||j.error.type)||j.message);throw new Error(`${r.status}: ${m||r.statusText||'request failed'}`);}
+  return j;
+}
+const anthropicHeaders=c=>({'x-api-key':c.key,'anthropic-version':'2026-10-21','anthropic-dangerous-direct-browser-access':'true','content-type':'application/json'});
+// Lists the models this key can use, so nobody has to type (or guess) model names.
+async function aiListModels(c){
+  if(c.provider==='anthropic'){const j=await aiFetchJson('https://api.anthropic.com/v1/models?limit=100',{headers:anthropicHeaders(c)});return (j.data||[]).map(m=>m.id);}
+  if(c.provider==='openai'){const j=await aiFetchJson('https://api.openai.com/v1/models',{headers:{Authorization:'Bearer '+c.key}});return (j.data||[]).map(m=>m.id).sort();}
+  if(c.provider==='gemini'){const j=await aiFetchJson(`https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=${encodeURIComponent(c.key)}`,{});
+    return (j.models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes('generateContent')).map(m=>m.name.replace(/^models\//,''));}
+  const j=await aiFetchJson(customBase(c)+'/models',{headers:c.key?{Authorization:'Bearer '+c.key}:{}});return (j.data||[]).map(m=>m.id).sort();
+}
+// One chat turn. messages: [{role:'user'|'assistant', content}]. Returns the reply text.
+async function aiChat(c,system,messages,signal){
+  if(c.provider==='anthropic'){
+    const body={model:c.model,max_tokens:16000,system,messages};const headers=anthropicHeaders(c);
+    if(CLAUDE_FALLBACK_MODELS.includes(c.model)){body.fallbacks='default';headers['anthropic-beta']='server-side-fallback-2026-07-01';}
+    const j=await aiFetchJson('https://api.anthropic.com/v1/messages',{method:'POST',headers,body:JSON.stringify(body),signal});
+    if(j.stop_reason==='refusal') throw new Error('The model declined this request. Rephrase it and try again.');
+    return (j.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
+  }
+  if(c.provider==='gemini'){
+    const j=await aiFetchJson(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.model)}:generateContent?key=${encodeURIComponent(c.key)}`,{method:'POST',headers:{'content-type':'application/json'},signal,
+      body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}))})});
+    return ((j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts)||[]).map(p=>p.text||'').join('').trim();
+  }
+  const base=c.provider==='openai'?'https://api.openai.com/v1':customBase(c);
+  const j=await aiFetchJson(base+'/chat/completions',{method:'POST',signal,headers:{'content-type':'application/json',...(c.key?{Authorization:'Bearer '+c.key}:{})},
+    body:JSON.stringify({model:c.model,messages:[{role:'system',content:system},...messages]})});
+  return ((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'').trim();
+}
+
+// What the assistant may know: a compact, current picture of the journal.
+function aiContext(){
+  const p=profile(), t=S.date, wid=isoWeek(t), w=S.weeks.get(wid), mon=mondayOf(t);
+  const recent=[];for(let i=13;i>=0;i--){const d=addDays(t,-i),doc=S.days.get(d);if(!doc)continue;
+    recent.push({date:d,keelTask:doc.focus.text,keelDone:doc.focus.done,area:AREA[doc.focus.area]||'',value:doc.focus.value,
+      tasks:[...doc.cream,...doc.cherries].filter(x=>filled(x.text)).map(x=>(x.done?'[x] ':'[ ] ')+x.text),
+      recharge:doc.relax.filter(x=>filled(x.text)).map(x=>(x.done?'[x] ':'[ ] ')+x.text),win:doc.evening.win,lesson:doc.evening.learned,rating:doc.evening.rating,
+      score:dayStats(doc,p.habits).score});}
+  return JSON.stringify({today:t,weekday:parse(t).toLocaleDateString('en-GB',{weekday:'long'}),currentWeek:{id:wid,monday:mon,sunday:addDays(mon,6),
+      goals:w?w.goals:[],notes:w?w.notes:''},nextWeek:{id:isoWeek(addDays(mon,7)),monday:addDays(mon,7)},
+    heading:{horizon:p.vision.horizon,areas:Object.fromEntries(AREAS.map(([id,n])=>[n,p.vision.areas[id]||''])) },
+    values:p.values.order.map(v=>({value:v,status:p.values.status[v]==='more'?'needs attention':p.values.status[v]==='well'?'on course':'not rated'})),
+    habits:p.habits.map(h=>h.name),lifeAreaIds:Object.fromEntries(AREAS.map(([id,n])=>[id,n])),last14Days:recent});
+}
+const AI_SYSTEM=`You are the assistant inside Daykeel, a private daily planner. Each morning the user sets one keel task (the single most important task), two next-up tasks, other tasks, recharge items, gratitude and a bright spot; each evening they log a win, a highlight, a lesson, a rating and habits. Each week has weekly goals. Users also keep a heading (where they want to be in six life areas) and a values compass.
+Help the user plan and reflect. Be warm, concrete and brief. Use plain sentences and short lists. Refer to their real data when it helps.
+When the user asks you to add or change something in Daykeel (or pastes goals or tasks to import), propose the changes in ONE fenced code block with the language tag daykeel-actions containing a JSON array. Daykeel shows each action to the user, who confirms before anything is saved. Allowed actions:
+{"type":"add_week_goal","week":"YYYY-Www","text":"..."}
+{"type":"set_keel_task","date":"YYYY-MM-DD","text":"...","area":"body|career|family|attitude|finance|leisure (optional)"}
+{"type":"add_task","date":"YYYY-MM-DD","text":"...","list":"next|also"}
+{"type":"add_recharge","date":"YYYY-MM-DD","text":"..."}
+{"type":"add_habit","name":"..."}
+Use ISO week ids exactly as given in the context (currentWeek.id, nextWeek.id). Only propose actions the user asked for or clearly agreed to; never delete anything. Outside the code block, explain briefly what you propose.`;
+function parseAiActions(text){
+  const out=[];const re=/```daykeel-actions\s*([\s\S]*?)```/g;let m;
+  while((m=re.exec(text))){try{const a=JSON.parse(m[1]);if(Array.isArray(a)) for(const x of a) if(x&&typeof x==='object'&&typeof x.type==='string') out.push(x);}catch(e){}}
+  const ok={add_week_goal:x=>/^\d{4}-W\d{2}$/.test(x.week)&&filled(x.text),set_keel_task:x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&filled(x.text),
+    add_task:x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&filled(x.text),add_recharge:x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&filled(x.text),add_habit:x=>filled(x.name)};
+  return out.filter(x=>ok[x.type]&&ok[x.type](x)).map(x=>({...x,text:x.text&&String(x.text).slice(0,300),name:x.name&&String(x.name).slice(0,120)}));
+}
+function describeAiAction(x){
+  const day=d=>fmtShort(d)+(d===S.date?' (today)':'');
+  if(x.type==='add_week_goal') return `Weekly goal for week ${x.week.split('-W')[1]}: ${x.text}`;
+  if(x.type==='set_keel_task'){const cur=S.days.get(x.date);const old=cur&&filled(cur.focus.text)?` (replaces "${cur.focus.text}")`:'';return `Keel task on ${day(x.date)}: ${x.text}${old}`;}
+  if(x.type==='add_task') return `${x.list==='next'?'Next-up':'Also-today'} task on ${day(x.date)}: ${x.text}`;
+  if(x.type==='add_recharge') return `Recharge on ${day(x.date)}: ${x.text}`;
+  if(x.type==='add_habit') return `New habit: ${x.name}`;
+  return x.type;
+}
+// Applies confirmed actions through the normal, conflict-safe saving.
+function applyAiAction(x){
+  const ensureDay=d=>{let doc=S.days.get(d);if(!doc){doc=newDay(d);S.days.set(d,doc);}return doc;};
+  if(x.type==='add_week_goal'){let w=S.weeks.get(x.week);if(!w){const [y,n]=x.week.split('-W').map(Number);const jan4=new Date(y,0,4);const mon=new Date(jan4);mon.setDate(jan4.getDate()-((jan4.getDay()+6)%7)+(n-1)*7);
+      w=newWeek(x.week,ymd(mon));S.weeks.set(x.week,w);}
+    normWeek(w);if(!w.goals.some(g=>g.text.trim().toLowerCase()===x.text.trim().toLowerCase())) w.goals.push({text:x.text,done:false});scheduleSave('weeks',x.week,200);return;}
+  if(x.type==='add_habit'){const p=profile();if(!p.habits.some(h=>h.name.toLowerCase()===x.name.toLowerCase())) p.habits.push({id:'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:x.name});scheduleSave('meta','profile',200);return;}
+  const d=ensureDay(x.date);
+  if(x.type==='set_keel_task'){d.focus.text=x.text;d.focus.done=false;if(x.area&&AREA[x.area]) d.focus.area=x.area;}
+  else if(x.type==='add_task'){const t={text:x.text,done:false,carried:0};const slot=x.list==='next'?d.cream.find(c=>!filled(c.text)):null;if(slot) Object.assign(slot,t); else d.cherries.push(t);}
+  else if(x.type==='add_recharge'){const slot=d.relax.find(r=>!filled(r.text));if(slot) slot.text=x.text; else d.relax.push({text:x.text,done:false});}
+  if(x.date<S.date) d.editedAt=Date.now();
+  scheduleSave('days',x.date,200);
+}
+
+// Guide for outside AIs (Claude, ChatGPT … with access to the user's OneDrive or folder and other tools such as Notion).
+function aiGuideText(){
+  return `# Daykeel: guide for AI assistants
+
+This folder (${folderLabel()}) is a person's Daykeel journal. Read this guide before reading or writing any Daykeel file.
+
+## Files
+- \`data/days/YYYY-MM-DD.json\`: one file per day.
+- \`data/weeks/YYYY-Www.json\`: one file per ISO week (e.g. 2026-W44 = Monday 26 Oct to Sunday 1 Nov 2026).
+- \`data/meta/profile.json\`: heading, values, habits.
+- \`pages/\`: readable copies (generated by the app; do not edit). \`backups/\`: snapshots.
+
+## Week file
+\`{"id":"2026-W44","monday":"2026-10-26","goals":[{"text":"…","done":false}],"cal":{"mon":"","tue":"","wed":"","thu":"","fri":"","wkd":""},"notes":"","wins":"","reflection":{"well":"","change":"","rating":0},"updatedAt":<unix ms>}\`
+- \`goals\`: the weekly goals shown on the week page and under each day's keel task.
+
+## Day file
+\`{"date":"YYYY-MM-DD","status":"open","focus":{"text":"","done":false,"area":"","value":"","carried":0},"cream":[{"text":"","done":false,"carried":0},{"text":"","done":false,"carried":0}],"cherries":[],"relax":[{"text":"","done":false}],"grateful":["","",""],"forward":["",""],"notes":"","evening":{"win":"","moment":"","learned":"","rating":0},"habits":{},"createdAt":<unix ms>,"updatedAt":<unix ms>}\`
+- \`focus\` = keel task (most important task). \`area\` is one of: ${AREAS.map(([id,n])=>`${id} (${n})`).join(', ')}.
+- \`cream\` = the two next-up tasks, \`cherries\` = also-today tasks, \`relax\` = recharge items.
+
+## Rules
+1. Read a file before changing it, change only what was asked, and keep every other field exactly as it is.
+2. Add, never delete, unless the person explicitly asks. Do not change \`status\` or \`carriedTo\`.
+3. Set \`updatedAt\` to the current time in milliseconds when you write a file. Write valid JSON (UTF-8).
+4. If a week or day file does not exist yet, create it with the full structure above.
+5. Avoid writing while the person is editing the same day in the app; Daykeel merges changes, but simple changes are safest.
+
+## Example requests
+- "Read my weekly goals from Notion and add them to Daykeel for this week."
+- "Look at my Daykeel week and suggest a keel task for each remaining day."
+- "Review my last 30 days in Daykeel and save the review to data/reviews."
+`;
+}
+function aiOutsidePrompt(){
+  return `I use Daykeel, a planner that stores its data as files in my OneDrive (${folderLabel()}). Before reading or writing anything there, read the file ai/DAYKEEL-AI-GUIDE.md in that folder and follow its rules (read before writing, keep all other fields, only add, set updatedAt).
+Today is ${S.date}; this week is ${isoWeek(S.date)} (Monday ${mondayOf(S.date)}).
+My request: `;
+}
+
 /* ---------- backup ---------- */
-function backupName(){return `${S.date.replaceAll('-','')}-6 Minute Journal-Backup-v1.json`;}
-function backupJSON(){const o={app:'6-minute-journal',format:1,exportedAt:new Date().toISOString()};for(const c of COLS)o[c]=Object.fromEntries([...S[c].entries()].filter(([id,v])=>c!=='weeks'||v.updatedAt));return JSON.stringify(o);}
+function backupName(){return `${S.date.replaceAll('-','')}-Daykeel-Backup-v1.json`;}
+function backupJSON(){const o={app:'daykeel',format:1,exportedAt:new Date().toISOString()};for(const c of COLS)o[c]=Object.fromEntries([...S[c].entries()].filter(([id,v])=>c!=='weeks'||v.updatedAt));return JSON.stringify(o);}
 
 /* ---------- events ---------- */
 document.addEventListener('input',e=>{
@@ -1258,6 +1503,7 @@ document.addEventListener('input',e=>{
   if('rerender' in el.dataset) render();
 });
 document.addEventListener('change',async e=>{
+  if(e.target.id==='aiProvider'){const f=readAiForm();S.aiForm={...f,model:f.provider==='anthropic'?'claude-opus-5-5':'',baseUrl:f.provider==='custom'?f.baseUrl:''};S.aiModels=[];S.aiMsg='';render();return;}
   const set=e.target.closest('[data-set]');
   if(set&&NATIVE&&S.settings){
     const k=set.dataset.set;
@@ -1273,7 +1519,7 @@ document.addEventListener('change',async e=>{
   try{const o=JSON.parse(await f.text());if(!o||typeof o.days!=='object')throw 0;
     const n=c=>Object.keys(o[c]||{}).length;
     S.restore={data:o,at:o.exportedAt?new Date(o.exportedAt).toLocaleString('en-GB'):'',counts:`${n('days')} day pages, ${n('weeks')} weeks and ${n('reviews')} reviews`};S.restoreMsg='';}
-  catch(err){S.restore=null;S.restoreMsg='This file is not a journal backup. Choose a file saved with "Save backup file".';}
+  catch(err){S.restore=null;S.restoreMsg='This file is not a journal backup. Choose a file saved with "Save snapshot".';}
   render();
 });
 document.querySelectorAll('.tabs [data-tab]').forEach(b=>b.addEventListener('click',()=>{
@@ -1305,6 +1551,42 @@ setInterval(refreshFromStore,45*1000);
 setInterval(checkDate,5*60*1000);
 
 const A={
+  'wgoal-add'(){const wid=isoWeek(S.weekMon);if(!S.weeks.has(wid))S.weeks.set(wid,newWeek(wid,S.weekMon));const w=normWeek(S.weeks.get(wid));w.goals.push({text:'',done:false});scheduleSave('weeks',wid,300);render();
+    const ins=document.querySelectorAll(`[data-b^="weeks/${wid}/goals."][type=text]`);if(ins.length)ins[ins.length-1].focus();},
+  'wgoal-del'(a){const wid=isoWeek(S.weekMon);const w=S.weeks.get(wid);if(!w)return;w.goals.splice(+a.dataset.i,1);scheduleSave('weeks',wid,150);render();},
+  async 'ai-load-models'(){const c=readAiForm();S.aiForm=c;
+    if(!c.key&&c.provider!=='custom'){S.aiMsg='Enter your API key first.';return render();}
+    if(c.provider==='custom'&&!c.baseUrl){S.aiMsg='Enter the base URL of the service first.';return render();}
+    S.aiMsg='Loading models…';render();
+    try{S.aiModels=await aiListModels(c);S.aiMsg=S.aiModels.length?`Found ${S.aiModels.length} models. Click the Model field to choose one.`:'The provider returned no models; type the model name yourself.';}
+    catch(e){S.aiModels=[];S.aiMsg='Could not load models. '+e.message;}
+    render();},
+  async 'ai-test'(){const c=readAiForm();S.aiForm=c;
+    if(!c.model){S.aiMsg='Choose a model first (Load models).';return render();}
+    S.aiMsg='Testing…';render();
+    try{const r=await aiChat(c,'You are a connection test. Reply with exactly: OK',[{role:'user',content:'Test'}]);S.aiMsg=`Connection works. The model replied: ${r.slice(0,80)||'(empty)'}. Click Save to keep it.`;}
+    catch(e){S.aiMsg='The test failed. '+e.message;}
+    render();},
+  'ai-save'(){const c=readAiForm();
+    if(!c.model||(!c.key&&c.provider!=='custom')||(c.provider==='custom'&&!c.baseUrl)){S.aiForm=c;S.aiMsg='Fill in provider, key and model first.';return render();}
+    aiSaveCfg(c);S.aiForm=null;S.aiMsg='Saved on this device. Open the AI tab to start.';render();},
+  'ai-remove'(){aiSaveCfg(null);S.aiForm=null;S.aiModels=[];S.aiMsg='The key was removed from this device.';render();},
+  'ai-quick'(a){aiSend(a.dataset.q+((($('#aiInput')||{}).value||'').trim()?'\n\n'+$('#aiInput').value.trim():''));},
+  'ai-send'(){const el=$('#aiInput');aiSend(el?el.value.trim():'');},
+  'ai-stop'(){if(S.aiCtl)S.aiCtl.abort();},
+  'ai-clear'(){S.aiChat=[];render();},
+  'ai-dismiss'(a){const m=S.aiChat[+a.dataset.m];if(m)m.applied=0;render();},
+  'ai-apply'(a){const idx=+a.dataset.m,m=S.aiChat[idx];if(!m||!m.actions)return;
+    const picked=[...document.querySelectorAll(`[data-aipick="${idx}"]`)].filter(x=>x.checked).map(x=>m.actions[+x.dataset.i]);
+    for(const x of picked) applyAiAction(x);
+    m.applied=picked.length;render();},
+  async 'ai-guide'(){
+    try{await store.writeText('ai','DAYKEEL-AI-GUIDE.md',aiGuideText());S.aiGuideMsg='Saved ai/DAYKEEL-AI-GUIDE.md in your Daykeel folder.';}
+    catch(e){S.aiGuideMsg='The guide could not be saved. '+(e&&e.message||'');}
+    render();},
+  'ai-copy-prompt'(){const t=aiOutsidePrompt();S.aiCopyText='';
+    const fallback=()=>{S.aiCopyText=t;render();const el=$('#aiCopyText');if(el){el.focus();el.select();}};
+    try{navigator.clipboard.writeText(t).then(()=>{S.aiGuideMsg='Instructions copied. Paste them into your AI chat and add your request at the end.';render();},fallback);}catch(e){fallback();}},
   tab(a){if(a.dataset.tab==='day'&&store) return openDay(S.cur||S.date);S.tab=a.dataset.tab;render();if(a.dataset.anchor){const el=document.getElementById(a.dataset.anchor);if(el)el.scrollIntoView();}else window.scrollTo(0,0);},
   'day-go'(a){openDay(addDays(S.cur,+a.dataset.d));},
   'day-today'(){openDay(S.date);},
@@ -1349,10 +1631,9 @@ const A={
   wh(a){const date=a.dataset.date,hid=a.dataset.h;let d=S.days.get(date);
     if(!d){d=newDay(date);if(date<S.date)d.status='closed';S.days.set(date,d);}
     d.habits[hid]=a.checked;scheduleSave('days',date,150);},
-  vpick(a){const v=profile().values,x=a.dataset.v;if(v.selected.includes(x)){v.selected=v.selected.filter(y=>y!==x);v.top=v.top.filter(y=>y!==x);}else if(v.selected.length<10)v.selected.push(x);scheduleSave('meta','profile',300);render();},
-  vadd(){const el=$('#newValue');const x=(el&&el.value||'').trim();if(!x)return;const v=profile().values;if(![...VALUES,...v.custom].some(y=>y.toLowerCase()===x.toLowerCase()))v.custom.push(x);if(!v.selected.includes(x)&&v.selected.length<10)v.selected.push(x);scheduleSave('meta','profile',300);render();},
-  vstar(a){const v=profile().values,x=a.dataset.v;if(v.top.includes(x))v.top=v.top.filter(y=>y!==x);else if(v.top.length<5)v.top.push(x);scheduleSave('meta','profile',300);render();},
-  pair(a){profile().values.pairs[a.dataset.k]=a.dataset.v;scheduleSave('meta','profile',300);render();},
+  vpick(a){const v=profile().values,x=a.dataset.v;if(v.order.includes(x))v.order=v.order.filter(y=>y!==x);else if(v.order.length<MAX_VALUES)v.order.push(x);scheduleSave('meta','profile',300);render();},
+  vadd(){const el=$('#newValue');const x=(el&&el.value||'').trim();if(!x)return;const v=profile().values;if(![...VALUES,...v.custom].some(y=>y.toLowerCase()===x.toLowerCase()))v.custom.push(x);if(!v.order.includes(x)&&v.order.length<MAX_VALUES)v.order.push(x);scheduleSave('meta','profile',300);render();},
+  vmove(a){const o=profile().values.order,i=o.indexOf(a.dataset.v),j=i+(+a.dataset.d);if(i<0||j<0||j>=o.length)return;[o[i],o[j]]=[o[j],o[i]];scheduleSave('meta','profile',300);render();},
   vstatus(a){const st=profile().values.status;st[a.dataset.v]=st[a.dataset.v]===a.dataset.s?'':a.dataset.s;scheduleSave('meta','profile',300);render();},
   hadd(){const el=$('#newHabit');const x=(el&&el.value||'').trim();if(!x)return;profile().habits.push({id:'h'+Date.now().toString(36),name:x});scheduleSave('meta','profile',150);render();},
   hdel(a){profile().habits.splice(+a.dataset.i,1);scheduleSave('meta','profile',150);render();},
@@ -1444,11 +1725,11 @@ async function loadAll(background){
 }
 async function openFolder(h){
   const prev=store;S.dir=h;store=NATIVE?nativeStore():CLOUD_MODE?graphStore():fsStore(h);
-  $('#main').innerHTML=`<p class="loading">${CLOUD_MODE?'Loading your journal from OneDrive…':'Reading your journal folder…'}</p>`;
+  $('#main').innerHTML=`<p class="loading">${CLOUD_MODE?'Loading Daykeel from OneDrive…':'Reading your Daykeel folder…'}</p>`;
   try{await loadAll();}
   catch(e){console.warn('folder read failed',e);store=prev;
     S.connectMsg=CLOUD_MODE?(e&&e.code==='auth'?'Your sign-in has expired. Sign in again.':`Your OneDrive could not be read, so nothing was changed. Details: ${e&&e.message||e}`)
-      :'The folder could not be read. Choose the Daily Plans folder again.';
+      :'The folder could not be read. Choose the folder again in Settings.';
     render();return;}
   if(CLOUD_MODE) restorePending();
   S.lastSync=Date.now();
@@ -1474,7 +1755,7 @@ async function boot(){
       lsSet('smj6:silent','1');return Auth.login('none');
     }
     try{localStorage.removeItem('smj6:silent');}catch(e){}
-    if(await Auth.token()) return openFolder({name:'OneDrive',path:'OneDrive › Apps › 6-Minute Journal'});
+    if(await Auth.token()) return openFolder({name:'OneDrive',path:APP_FOLDER_LABEL});
     return render();
   }
   if(NATIVE){

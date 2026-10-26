@@ -1,12 +1,12 @@
 {
-  "name": "6-Minute Journal",
-  "short_name": "Journal",
-  "description": "Private daily and weekly planner based on the 6-Minute Success Journal.",
+  "name": "Daykeel",
+  "short_name": "Daykeel",
+  "description": "A private daily planner that keeps your day on course.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#eceff0",
-  "theme_color": "#1f5a66",
+  "background_color": "#edf0f4",
+  "theme_color": "#1b3a5c",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
